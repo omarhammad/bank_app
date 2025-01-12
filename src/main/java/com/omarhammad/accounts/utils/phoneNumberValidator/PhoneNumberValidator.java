@@ -3,7 +3,6 @@ package com.omarhammad.accounts.utils.phoneNumberValidator;
 import com.google.i18n.phonenumbers.NumberParseException;
 import com.google.i18n.phonenumbers.PhoneNumberUtil;
 import com.google.i18n.phonenumbers.Phonenumber;
-import com.omarhammad.accounts.exceptions.InvalidPhoneNumberException;
 import jakarta.validation.ConstraintValidator;
 import jakarta.validation.ConstraintValidatorContext;
 
@@ -15,12 +14,9 @@ public class PhoneNumberValidator implements ConstraintValidator<ValidPhoneNumbe
         try {
             Phonenumber.PhoneNumber phoneNumber = phoneNumberUtil.parse(value, null);
 
-            if (!phoneNumberUtil.isValidNumber(phoneNumber)) {
-                throw new InvalidPhoneNumberException("Invalid phone number format");
-            }
-            return true;
+            return phoneNumberUtil.isValidNumber(phoneNumber);
         } catch (NumberParseException e) {
-            throw new InvalidPhoneNumberException("Invalid phone number format");
+            return false;
         }
     }
 }

@@ -3,6 +3,7 @@ package com.omarhammad.accounts.controllers;
 import com.omarhammad.accounts.controllers.dtos.ResponseDTO;
 import com.omarhammad.accounts.controllers.dtos.customers.CustomerDTO;
 import com.omarhammad.accounts.services.accounts.IAccountsService;
+import com.omarhammad.accounts.utils.phoneNumberValidator.PhoneNumberValidator;
 import com.omarhammad.accounts.utils.phoneNumberValidator.ValidPhoneNumber;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
@@ -19,7 +20,6 @@ public class AccountRestController {
     private final IAccountsService accountsService;
 
     @PostMapping("")
-
     public ResponseEntity<ResponseDTO> createAccount(@RequestBody @Valid CustomerDTO customerDTO) {
 
         accountsService.createAccount(customerDTO);
@@ -30,11 +30,9 @@ public class AccountRestController {
     }
 
     @GetMapping("/{mobileNumber}")
-    public ResponseEntity<CustomerDTO> fetchAccountDetails(@PathVariable @ValidPhoneNumber String mobileNumber) {
-
+    public ResponseEntity<CustomerDTO> fetchAccountDetails(@PathVariable String mobileNumber) {
 
         CustomerDTO customerDTO = accountsService.fetchAccountDetails(mobileNumber);
-
 
         return ResponseEntity.ok(customerDTO);
 
@@ -51,7 +49,7 @@ public class AccountRestController {
 
 
     @DeleteMapping("/{mobileNumber}")
-    public ResponseEntity<ResponseDTO> deleteAccountDetails(@PathVariable @ValidPhoneNumber String mobileNumber) {
+    public ResponseEntity<ResponseDTO> deleteAccountDetails(@PathVariable String mobileNumber) {
 
         accountsService.deleteAccountDetails(mobileNumber);
 

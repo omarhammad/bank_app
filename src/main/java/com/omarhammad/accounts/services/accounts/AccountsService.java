@@ -7,8 +7,10 @@ import com.omarhammad.accounts.domain.AccountType;
 import com.omarhammad.accounts.domain.Customer;
 import com.omarhammad.accounts.exceptions.CustomerAlreadyExistsException;
 import com.omarhammad.accounts.exceptions.InvalidAccountTypeException;
+import com.omarhammad.accounts.exceptions.InvalidPhoneNumberException;
 import com.omarhammad.accounts.repository.accounts.AccountsRepository;
 import com.omarhammad.accounts.repository.customers.CustomerRepository;
+import com.omarhammad.accounts.utils.phoneNumberValidator.PhoneNumberValidator;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.AllArgsConstructor;
 import org.modelmapper.ModelMapper;
@@ -25,6 +27,7 @@ public class AccountsService implements IAccountsService {
 
     private final AccountsRepository accountsRepository;
     private final CustomerRepository customerRepository;
+    private final PhoneNumberValidator phoneNumberValidator;
     private final ModelMapper modelMapper;
 
 
@@ -50,6 +53,11 @@ public class AccountsService implements IAccountsService {
 
     @Override
     public CustomerDTO fetchAccountDetails(String mobileNumber) {
+
+
+        if (!phoneNumberValidator.isValid(mobileNumber, null))
+            throw new InvalidPhoneNumberException("Invalid phone number format");
+
 
         Customer customer = customerRepository.findCustomerByMobileNumber(mobileNumber)
                 .orElseThrow(() -> new EntityNotFoundException("Customer not found"));
@@ -102,6 +110,9 @@ public class AccountsService implements IAccountsService {
     @Override
     @Transactional
     public void deleteAccountDetails(String mobileNumber) {
+
+        if (!phoneNumberValidator.isValid(mobileNumber, null))
+            throw new InvalidPhoneNumberException("Invalid phone number format");
 
         Customer customer = customerRepository.findCustomerByMobileNumber(mobileNumber)
                 .orElseThrow(() -> new EntityNotFoundException("Customer with phone number %s not found".formatted(mobileNumber)));
