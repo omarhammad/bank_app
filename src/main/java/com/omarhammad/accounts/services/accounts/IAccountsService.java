@@ -1,6 +1,7 @@
 package com.omarhammad.accounts.services.accounts;
 
 import com.omarhammad.accounts.controllers.dtos.customers.CustomerDTO;
+import jakarta.validation.Valid;
 
 public interface IAccountsService {
 
@@ -10,4 +11,5 @@ public interface IAccountsService {
 
     void updateAccountDetails(CustomerDTO customerDTO);
 
+    void deleteAccountDetails(String mobileNumber);
 }

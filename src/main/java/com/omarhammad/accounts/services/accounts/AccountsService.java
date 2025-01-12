@@ -13,6 +13,7 @@ import jakarta.persistence.EntityNotFoundException;
 import lombok.AllArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 import java.util.Arrays;
@@ -78,8 +79,9 @@ public class AccountsService implements IAccountsService {
             try {
                 account.setAccountType(AccountType.valueOf(accountsDTO.getAccountType().toUpperCase()));
             } catch (IllegalArgumentException e) {
-                throw new InvalidAccountTypeException("Invalid account type: " + accountsDTO.getAccountType()+". Provide one of these ("+ Arrays.toString(AccountType.values()) +")");
-            }            account.setUpdatedAt(LocalDateTime.now());
+                throw new InvalidAccountTypeException("Invalid account type: " + accountsDTO.getAccountType() + ". Provide one of these (" + Arrays.toString(AccountType.values()) + ")");
+            }
+            account.setUpdatedAt(LocalDateTime.now());
             account.setUpdatedBy("Anonymous");
             account = accountsRepository.save(account);
 
@@ -95,6 +97,17 @@ public class AccountsService implements IAccountsService {
         }
 
 
+    }
+
+    @Override
+    @Transactional
+    public void deleteAccountDetails(String mobileNumber) {
+
+        Customer customer = customerRepository.findCustomerByMobileNumber(mobileNumber)
+                .orElseThrow(() -> new EntityNotFoundException("Customer with phone number %s not found".formatted(mobileNumber)));
+
+        accountsRepository.deleteAccountByCustomer_Id(customer.getId());
+        customerRepository.deleteById(customer.getId());
     }
 
 

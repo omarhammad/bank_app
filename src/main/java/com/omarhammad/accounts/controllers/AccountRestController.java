@@ -50,4 +50,14 @@ public class AccountRestController {
     }
 
 
+    @DeleteMapping("/{mobileNumber}")
+    public ResponseEntity<ResponseDTO> deleteAccountDetails(@PathVariable @ValidPhoneNumber String mobileNumber) {
+
+        accountsService.deleteAccountDetails(mobileNumber);
+
+        return ResponseEntity.ok(new ResponseDTO(HttpStatus.NO_CONTENT.value(), "Account deleted successfully"));
+
+    }
+
+
 }
