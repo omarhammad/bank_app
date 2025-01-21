@@ -43,8 +43,6 @@ public class AccountsService implements IAccountsService {
                     );
                 });
 
-        customer.setCreatedAt(LocalDateTime.now());
-        customer.setCreatedBy("Anonymous");
         Customer savedCustomer = customerRepository.save(customer);
 
         Account newAccount = createNewAccount(savedCustomer);
@@ -89,8 +87,6 @@ public class AccountsService implements IAccountsService {
             } catch (IllegalArgumentException e) {
                 throw new InvalidAccountTypeException("Invalid account type: " + accountsDTO.getAccountType() + ". Provide one of these (" + Arrays.toString(AccountType.values()) + ")");
             }
-            account.setUpdatedAt(LocalDateTime.now());
-            account.setUpdatedBy("Anonymous");
             account = accountsRepository.save(account);
 
             Customer customer = customerRepository.findById(account.getCustomer().getId())
@@ -99,8 +95,6 @@ public class AccountsService implements IAccountsService {
             customer.setName(customerDTO.getName());
             customer.setEmail(customerDTO.getEmail());
             customer.setMobileNumber(customerDTO.getMobileNumber());
-            customer.setUpdatedAt(LocalDateTime.now());
-            customer.setUpdatedBy("Anonymous");
             customerRepository.save(customer);
         }
 
@@ -131,8 +125,6 @@ public class AccountsService implements IAccountsService {
         newAccount.setAccountNumber(randomAccNumber);
         newAccount.setAccountType(AccountType.SAVINGS);
         newAccount.setBranchAddress("123 Main Street, New York");
-        newAccount.setCreatedAt(LocalDateTime.now());
-        newAccount.setCreatedBy("Anonymous");
 
 
         return newAccount;

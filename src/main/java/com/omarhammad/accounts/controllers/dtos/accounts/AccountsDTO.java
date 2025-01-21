@@ -1,21 +1,19 @@
 package com.omarhammad.accounts.controllers.dtos.accounts;
 
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.Pattern;
 import lombok.*;
 
 @Data
 public class AccountsDTO {
 
-    @NotNull(message = "account number must be provided!")
-    @NotBlank(message = "account number must be provided!")
+    @NotEmpty(message = "account number must be provided!")
+    @Pattern(regexp="(^$|[0-9]{10})", message = "Account Number must be 10 digits")
     private Long accountNumber;
 
-    @NotNull(message = "account number must be provided! e.g: [SAVINGS, BUSINESS, PERSONAL, FAMILY]")
-    @NotBlank(message = "account number must be provided! e.g: [SAVINGS, BUSINESS, PERSONAL, FAMILY]")
+    @NotEmpty(message = "account number must be provided! e.g: [SAVINGS, BUSINESS, PERSONAL, FAMILY]")
     private String AccountType;
-    @NotNull(message = "branch address must be provided!")
-    @NotBlank(message = "branch address must be provided!")
+    @NotEmpty(message = "branch address must be provided!")
     private String branchAddress;
 
 }
