@@ -9,10 +9,10 @@
         <option name="modules">
           <set>
             <option value="$PROJECT_DIR$" />
-            <option value="$PROJECT_DIR$/services" />
-            <option value="$PROJECT_DIR$/services/accounts" />
-            <option value="$PROJECT_DIR$/services/cards" />
-            <option value="$PROJECT_DIR$/services/loans" />
+            <option value="$PROJECT_DIR$/microservices" />
+            <option value="$PROJECT_DIR$/microservices/accounts" />
+            <option value="$PROJECT_DIR$/microservices/cards" />
+            <option value="$PROJECT_DIR$/microservices/loans" />
           </set>
         </option>
       </GradleProjectSettings>

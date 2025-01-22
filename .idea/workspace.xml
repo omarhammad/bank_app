@@ -5,67 +5,70 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="ec341d30-4278-4560-8771-281b1267a110" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/services/cards/README.md" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/services/cards/build.gradle.kts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/services/cards/docker-compose.yml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/services/cards/gradlew" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/services/cards/gradlew.bat" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/services/cards/settings.gradle.kts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/services/cards/src/main/java/com/omarhammad/accounts/CardsApplication.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/services/cards/src/main/java/com/omarhammad/accounts/configs/AppConfig.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/services/cards/src/main/java/com/omarhammad/accounts/controllers/dtos/ErrorResponseDTO.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/services/cards/src/main/java/com/omarhammad/accounts/controllers/dtos/ResponseDTO.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/services/cards/src/main/java/com/omarhammad/accounts/controllers/dtos/accounts/AccountsDTO.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/services/cards/src/main/java/com/omarhammad/accounts/controllers/dtos/customers/CustomerDTO.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/services/cards/src/main/java/com/omarhammad/accounts/utils/audit/AuditAwareSvc.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/services/cards/src/main/resources/application.properties" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/services/cards/src/test/java/com/omarhammad/accounts/CardsApplicationTests.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/services/loans/README.md" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/services/loans/build.gradle.kts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/services/loans/docker-compose.yml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/services/loans/gradlew" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/services/loans/gradlew.bat" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/services/loans/settings.gradle.kts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/services/loans/src/main/java/com/omarhammad/accounts/LoansApplication.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/services/loans/src/main/java/com/omarhammad/accounts/configs/AppConfig.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/services/loans/src/main/java/com/omarhammad/accounts/utils/audit/AuditAwareSvc.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/services/loans/src/main/resources/application.properties" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/services/loans/src/test/java/com/omarhammad/accounts/LoansApplicationTests.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/settings.gradle.kts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gitattributes" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/accounts/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/services/accounts/README.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/accounts/build.gradle.kts" beforeDir="false" afterPath="$PROJECT_DIR$/services/accounts/build.gradle.kts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/accounts/docker-compose.yml" beforeDir="false" afterPath="$PROJECT_DIR$/services/accounts/docker-compose.yml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/accounts/gradle/wrapper/gradle-wrapper.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/accounts/gradle/wrapper/gradle-wrapper.properties" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/accounts/gradlew" beforeDir="false" afterPath="$PROJECT_DIR$/services/accounts/gradlew" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/accounts/gradlew.bat" beforeDir="false" afterPath="$PROJECT_DIR$/services/accounts/gradlew.bat" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/accounts/settings.gradle.kts" beforeDir="false" afterPath="$PROJECT_DIR$/services/accounts/settings.gradle.kts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/accounts/src/main/java/com/omarhammad/accounts/AccountsApplication.java" beforeDir="false" afterPath="$PROJECT_DIR$/services/accounts/src/main/java/com/omarhammad/accounts/AccountsApplication.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/accounts/src/main/java/com/omarhammad/accounts/configs/AppConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/services/accounts/src/main/java/com/omarhammad/accounts/configs/AppConfig.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/accounts/src/main/java/com/omarhammad/accounts/controllers/AccountRestController.java" beforeDir="false" afterPath="$PROJECT_DIR$/services/accounts/src/main/java/com/omarhammad/accounts/controllers/AccountRestController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/accounts/src/main/java/com/omarhammad/accounts/controllers/dtos/ErrorResponseDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/services/accounts/src/main/java/com/omarhammad/accounts/controllers/dtos/ErrorResponseDTO.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/accounts/src/main/java/com/omarhammad/accounts/controllers/dtos/ResponseDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/services/accounts/src/main/java/com/omarhammad/accounts/controllers/dtos/ResponseDTO.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/accounts/src/main/java/com/omarhammad/accounts/controllers/dtos/accounts/AccountsDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/services/accounts/src/main/java/com/omarhammad/accounts/controllers/dtos/accounts/AccountsDTO.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/accounts/src/main/java/com/omarhammad/accounts/controllers/dtos/customers/CustomerDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/services/accounts/src/main/java/com/omarhammad/accounts/controllers/dtos/customers/CustomerDTO.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/accounts/src/main/java/com/omarhammad/accounts/domain/Account.java" beforeDir="false" afterPath="$PROJECT_DIR$/services/accounts/src/main/java/com/omarhammad/accounts/domain/Account.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/accounts/src/main/java/com/omarhammad/accounts/domain/AccountType.java" beforeDir="false" afterPath="$PROJECT_DIR$/services/accounts/src/main/java/com/omarhammad/accounts/domain/AccountType.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/accounts/src/main/java/com/omarhammad/accounts/domain/BaseEntity.java" beforeDir="false" afterPath="$PROJECT_DIR$/services/accounts/src/main/java/com/omarhammad/accounts/domain/BaseEntity.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/accounts/src/main/java/com/omarhammad/accounts/domain/Customer.java" beforeDir="false" afterPath="$PROJECT_DIR$/services/accounts/src/main/java/com/omarhammad/accounts/domain/Customer.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/accounts/src/main/java/com/omarhammad/accounts/exceptions/CustomerAlreadyExistsException.java" beforeDir="false" afterPath="$PROJECT_DIR$/services/accounts/src/main/java/com/omarhammad/accounts/exceptions/CustomerAlreadyExistsException.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/accounts/src/main/java/com/omarhammad/accounts/exceptions/GlobalExceptionHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/services/accounts/src/main/java/com/omarhammad/accounts/exceptions/GlobalExceptionHandler.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/accounts/src/main/java/com/omarhammad/accounts/exceptions/InvalidAccountTypeException.java" beforeDir="false" afterPath="$PROJECT_DIR$/services/accounts/src/main/java/com/omarhammad/accounts/exceptions/InvalidAccountTypeException.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/accounts/src/main/java/com/omarhammad/accounts/exceptions/InvalidPhoneNumberException.java" beforeDir="false" afterPath="$PROJECT_DIR$/services/accounts/src/main/java/com/omarhammad/accounts/exceptions/InvalidPhoneNumberException.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/accounts/src/main/java/com/omarhammad/accounts/repository/accounts/AccountsRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/services/accounts/src/main/java/com/omarhammad/accounts/repository/accounts/AccountsRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/accounts/src/main/java/com/omarhammad/accounts/repository/customers/CustomerRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/services/accounts/src/main/java/com/omarhammad/accounts/repository/customers/CustomerRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/accounts/src/main/java/com/omarhammad/accounts/services/accounts/AccountsService.java" beforeDir="false" afterPath="$PROJECT_DIR$/services/accounts/src/main/java/com/omarhammad/accounts/services/accounts/AccountsService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/accounts/src/main/java/com/omarhammad/accounts/services/accounts/IAccountsService.java" beforeDir="false" afterPath="$PROJECT_DIR$/services/accounts/src/main/java/com/omarhammad/accounts/services/accounts/IAccountsService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/accounts/src/main/java/com/omarhammad/accounts/utils/audit/AuditAwareSvc.java" beforeDir="false" afterPath="$PROJECT_DIR$/services/accounts/src/main/java/com/omarhammad/accounts/utils/audit/AuditAwareSvc.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/accounts/src/main/java/com/omarhammad/accounts/utils/phoneNumberValidator/PhoneNumberValidator.java" beforeDir="false" afterPath="$PROJECT_DIR$/services/accounts/src/main/java/com/omarhammad/accounts/utils/phoneNumberValidator/PhoneNumberValidator.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/accounts/src/main/java/com/omarhammad/accounts/utils/phoneNumberValidator/ValidPhoneNumber.java" beforeDir="false" afterPath="$PROJECT_DIR$/services/accounts/src/main/java/com/omarhammad/accounts/utils/phoneNumberValidator/ValidPhoneNumber.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/accounts/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/services/accounts/src/main/resources/application.properties" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/accounts/src/test/java/com/omarhammad/accounts/AccountsApplicationTests.java" beforeDir="false" afterPath="$PROJECT_DIR$/services/accounts/src/test/java/com/omarhammad/accounts/AccountsApplicationTests.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gradle/8.10/executionHistory/executionHistory.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/8.10/executionHistory/executionHistory.bin" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gradle/8.10/executionHistory/executionHistory.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/8.10/executionHistory/executionHistory.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gradle/8.10/fileHashes/fileHashes.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/8.10/fileHashes/fileHashes.bin" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gradle/8.10/fileHashes/fileHashes.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/8.10/fileHashes/fileHashes.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/modules.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/services/accounts/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/microservices/accounts/README.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/services/accounts/build.gradle.kts" beforeDir="false" afterPath="$PROJECT_DIR$/microservices/accounts/build.gradle.kts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/services/accounts/docker-compose.yml" beforeDir="false" afterPath="$PROJECT_DIR$/microservices/accounts/docker-compose.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/services/accounts/gradlew" beforeDir="false" afterPath="$PROJECT_DIR$/microservices/accounts/gradlew" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/services/accounts/gradlew.bat" beforeDir="false" afterPath="$PROJECT_DIR$/microservices/loans/gradlew.bat" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/services/accounts/settings.gradle.kts" beforeDir="false" afterPath="$PROJECT_DIR$/microservices/accounts/settings.gradle.kts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/services/accounts/src/main/java/com/omarhammad/accounts/AccountsApplication.java" beforeDir="false" afterPath="$PROJECT_DIR$/microservices/accounts/src/main/java/com/omarhammad/accounts/AccountsApplication.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/services/accounts/src/main/java/com/omarhammad/accounts/configs/AppConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/microservices/accounts/src/main/java/com/omarhammad/accounts/configs/AppConfig.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/services/accounts/src/main/java/com/omarhammad/accounts/controllers/AccountRestController.java" beforeDir="false" afterPath="$PROJECT_DIR$/microservices/accounts/src/main/java/com/omarhammad/accounts/controllers/AccountRestController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/services/accounts/src/main/java/com/omarhammad/accounts/controllers/dtos/ErrorResponseDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/microservices/accounts/src/main/java/com/omarhammad/accounts/controllers/dtos/ErrorResponseDTO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/services/accounts/src/main/java/com/omarhammad/accounts/controllers/dtos/ResponseDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/microservices/accounts/src/main/java/com/omarhammad/accounts/controllers/dtos/ResponseDTO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/services/accounts/src/main/java/com/omarhammad/accounts/controllers/dtos/accounts/AccountsDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/microservices/accounts/src/main/java/com/omarhammad/accounts/controllers/dtos/accounts/AccountsDTO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/services/accounts/src/main/java/com/omarhammad/accounts/controllers/dtos/customers/CustomerDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/microservices/accounts/src/main/java/com/omarhammad/accounts/controllers/dtos/customers/CustomerDTO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/services/accounts/src/main/java/com/omarhammad/accounts/domain/Account.java" beforeDir="false" afterPath="$PROJECT_DIR$/microservices/accounts/src/main/java/com/omarhammad/accounts/domain/Account.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/services/accounts/src/main/java/com/omarhammad/accounts/domain/AccountType.java" beforeDir="false" afterPath="$PROJECT_DIR$/microservices/accounts/src/main/java/com/omarhammad/accounts/domain/AccountType.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/services/accounts/src/main/java/com/omarhammad/accounts/domain/BaseEntity.java" beforeDir="false" afterPath="$PROJECT_DIR$/microservices/accounts/src/main/java/com/omarhammad/accounts/domain/BaseEntity.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/services/accounts/src/main/java/com/omarhammad/accounts/domain/Customer.java" beforeDir="false" afterPath="$PROJECT_DIR$/microservices/accounts/src/main/java/com/omarhammad/accounts/domain/Customer.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/services/accounts/src/main/java/com/omarhammad/accounts/exceptions/CustomerAlreadyExistsException.java" beforeDir="false" afterPath="$PROJECT_DIR$/microservices/accounts/src/main/java/com/omarhammad/accounts/exceptions/CustomerAlreadyExistsException.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/services/accounts/src/main/java/com/omarhammad/accounts/exceptions/GlobalExceptionHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/microservices/accounts/src/main/java/com/omarhammad/accounts/exceptions/GlobalExceptionHandler.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/services/accounts/src/main/java/com/omarhammad/accounts/exceptions/InvalidAccountTypeException.java" beforeDir="false" afterPath="$PROJECT_DIR$/microservices/accounts/src/main/java/com/omarhammad/accounts/exceptions/InvalidAccountTypeException.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/services/accounts/src/main/java/com/omarhammad/accounts/exceptions/InvalidPhoneNumberException.java" beforeDir="false" afterPath="$PROJECT_DIR$/microservices/accounts/src/main/java/com/omarhammad/accounts/exceptions/InvalidPhoneNumberException.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/services/accounts/src/main/java/com/omarhammad/accounts/repository/accounts/AccountsRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/microservices/accounts/src/main/java/com/omarhammad/accounts/repository/accounts/AccountsRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/services/accounts/src/main/java/com/omarhammad/accounts/repository/customers/CustomerRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/microservices/accounts/src/main/java/com/omarhammad/accounts/repository/customers/CustomerRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/services/accounts/src/main/java/com/omarhammad/accounts/services/accounts/AccountsService.java" beforeDir="false" afterPath="$PROJECT_DIR$/microservices/accounts/src/main/java/com/omarhammad/accounts/services/accounts/AccountsService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/services/accounts/src/main/java/com/omarhammad/accounts/services/accounts/IAccountsService.java" beforeDir="false" afterPath="$PROJECT_DIR$/microservices/accounts/src/main/java/com/omarhammad/accounts/services/accounts/IAccountsService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/services/accounts/src/main/java/com/omarhammad/accounts/utils/audit/AuditAwareSvc.java" beforeDir="false" afterPath="$PROJECT_DIR$/microservices/accounts/src/main/java/com/omarhammad/accounts/utils/audit/AuditAwareSvc.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/services/accounts/src/main/java/com/omarhammad/accounts/utils/phoneNumberValidator/PhoneNumberValidator.java" beforeDir="false" afterPath="$PROJECT_DIR$/microservices/accounts/src/main/java/com/omarhammad/accounts/utils/phoneNumberValidator/PhoneNumberValidator.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/services/accounts/src/main/java/com/omarhammad/accounts/utils/phoneNumberValidator/ValidPhoneNumber.java" beforeDir="false" afterPath="$PROJECT_DIR$/microservices/accounts/src/main/java/com/omarhammad/accounts/utils/phoneNumberValidator/ValidPhoneNumber.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/services/accounts/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/microservices/accounts/src/main/resources/application.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/services/accounts/src/test/java/com/omarhammad/accounts/AccountsApplicationTests.java" beforeDir="false" afterPath="$PROJECT_DIR$/microservices/accounts/src/test/java/com/omarhammad/accounts/AccountsApplicationTests.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/services/cards/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/microservices/cards/README.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/services/cards/build.gradle.kts" beforeDir="false" afterPath="$PROJECT_DIR$/microservices/cards/build.gradle.kts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/services/cards/docker-compose.yml" beforeDir="false" afterPath="$PROJECT_DIR$/microservices/cards/docker-compose.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/services/cards/gradlew" beforeDir="false" afterPath="$PROJECT_DIR$/microservices/cards/gradlew" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/services/cards/gradlew.bat" beforeDir="false" afterPath="$PROJECT_DIR$/microservices/accounts/gradlew.bat" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/services/cards/settings.gradle.kts" beforeDir="false" afterPath="$PROJECT_DIR$/microservices/cards/settings.gradle.kts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/services/cards/src/main/java/com/omarhammad/accounts/CardsApplication.java" beforeDir="false" afterPath="$PROJECT_DIR$/microservices/cards/src/main/java/com/omarhammad/accounts/CardsApplication.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/services/cards/src/main/java/com/omarhammad/accounts/configs/AppConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/microservices/cards/src/main/java/com/omarhammad/accounts/configs/AppConfig.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/services/cards/src/main/java/com/omarhammad/accounts/controllers/dtos/ErrorResponseDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/microservices/cards/src/main/java/com/omarhammad/accounts/controllers/dtos/ErrorResponseDTO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/services/cards/src/main/java/com/omarhammad/accounts/controllers/dtos/ResponseDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/microservices/cards/src/main/java/com/omarhammad/accounts/controllers/dtos/ResponseDTO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/services/cards/src/main/java/com/omarhammad/accounts/controllers/dtos/accounts/AccountsDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/microservices/cards/src/main/java/com/omarhammad/accounts/controllers/dtos/accounts/AccountsDTO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/services/cards/src/main/java/com/omarhammad/accounts/controllers/dtos/customers/CustomerDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/microservices/cards/src/main/java/com/omarhammad/accounts/controllers/dtos/customers/CustomerDTO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/services/cards/src/main/java/com/omarhammad/accounts/utils/audit/AuditAwareSvc.java" beforeDir="false" afterPath="$PROJECT_DIR$/microservices/cards/src/main/java/com/omarhammad/accounts/utils/audit/AuditAwareSvc.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/services/cards/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/microservices/cards/src/main/resources/application.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/services/cards/src/test/java/com/omarhammad/accounts/CardsApplicationTests.java" beforeDir="false" afterPath="$PROJECT_DIR$/microservices/cards/src/test/java/com/omarhammad/accounts/CardsApplicationTests.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/services/loans/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/microservices/loans/README.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/services/loans/build.gradle.kts" beforeDir="false" afterPath="$PROJECT_DIR$/microservices/loans/build.gradle.kts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/services/loans/docker-compose.yml" beforeDir="false" afterPath="$PROJECT_DIR$/microservices/loans/docker-compose.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/services/loans/gradlew" beforeDir="false" afterPath="$PROJECT_DIR$/microservices/loans/gradlew" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/services/loans/gradlew.bat" beforeDir="false" afterPath="$PROJECT_DIR$/microservices/cards/gradlew.bat" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/services/loans/settings.gradle.kts" beforeDir="false" afterPath="$PROJECT_DIR$/microservices/loans/settings.gradle.kts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/services/loans/src/main/java/com/omarhammad/accounts/LoansApplication.java" beforeDir="false" afterPath="$PROJECT_DIR$/microservices/loans/src/main/java/com/omarhammad/accounts/LoansApplication.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/services/loans/src/main/java/com/omarhammad/accounts/configs/AppConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/microservices/loans/src/main/java/com/omarhammad/accounts/configs/AppConfig.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/services/loans/src/main/java/com/omarhammad/accounts/utils/audit/AuditAwareSvc.java" beforeDir="false" afterPath="$PROJECT_DIR$/microservices/loans/src/main/java/com/omarhammad/accounts/utils/audit/AuditAwareSvc.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/services/loans/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/microservices/loans/src/main/resources/application.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/services/loans/src/test/java/com/omarhammad/accounts/LoansApplicationTests.java" beforeDir="false" afterPath="$PROJECT_DIR$/microservices/loans/src/test/java/com/omarhammad/accounts/LoansApplicationTests.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/settings.gradle.kts" beforeDir="false" afterPath="$PROJECT_DIR$/settings.gradle.kts" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -336,7 +339,7 @@
       <workItem from="1737412854155" duration="27056000" />
       <workItem from="1737578593842" duration="1295000" />
       <workItem from="1737581992093" duration="751000" />
-      <workItem from="1737583942524" duration="1803000" />
+      <workItem from="1737583942524" duration="2157000" />
     </task>
     <servers />
   </component>
