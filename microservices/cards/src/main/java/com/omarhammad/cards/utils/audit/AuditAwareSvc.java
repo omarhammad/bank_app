@@ -1,4 +1,4 @@
-package com.omarhammad.accounts.utils.audit;
+package com.omarhammad.cards.utils.audit;
 
 import org.springframework.data.domain.AuditorAware;
 

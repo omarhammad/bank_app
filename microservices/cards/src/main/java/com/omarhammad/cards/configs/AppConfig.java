@@ -1,6 +1,7 @@
-package com.omarhammad.accounts.configs;
+package com.omarhammad.cards.configs;
 
-import com.omarhammad.accounts.utils.audit.AuditAwareSvc;
+import com.omarhammad.cards.utils.audit.AuditAwareSvc;
+import com.omarhammad.cards.utils.phoneNumberValidator.PhoneNumberValidator;
 import io.swagger.v3.oas.models.OpenAPI;
 import io.swagger.v3.oas.models.info.Contact;
 import io.swagger.v3.oas.models.info.Info;
@@ -19,6 +20,10 @@ public class AppConfig {
         return new ModelMapper();
     }
 
+    @Bean
+    public PhoneNumberValidator phoneNumberValidator() {
+        return new PhoneNumberValidator();
+    }
 
     @Bean
     public AuditAwareSvc auditAwareSvc() {
@@ -29,9 +34,9 @@ public class AppConfig {
     public OpenAPI customOpenAPI() {
         return new OpenAPI()
                 .info(new Info()
-                        .title("Accounts API Documentation")
+                        .title("Cards API Documentation")
                         .version("1.0")
-                        .description("Accounts microservice REST API Documentation")
+                        .description("Cards microservice REST API Documentation")
                         .contact(new Contact()
                                 .name("Omar Hammad")
                                 .email("omar.hammad@gamil.com")

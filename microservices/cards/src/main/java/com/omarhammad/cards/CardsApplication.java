@@ -1,4 +1,4 @@
-package com.omarhammad.accounts;
+package com.omarhammad.cards;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
