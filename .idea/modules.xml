@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/bank_app.iml" filepath="$PROJECT_DIR$/.idea/modules/bank_app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/services/bank_app.services.iml" filepath="$PROJECT_DIR$/.idea/modules/services/bank_app.services.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/services/accounts/bank_app.services.accounts.iml" filepath="$PROJECT_DIR$/.idea/modules/services/accounts/bank_app.services.accounts.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/services/accounts/bank_app.services.accounts.main.iml" filepath="$PROJECT_DIR$/.idea/modules/services/accounts/bank_app.services.accounts.main.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/services/accounts/bank_app.services.accounts.test.iml" filepath="$PROJECT_DIR$/.idea/modules/services/accounts/bank_app.services.accounts.test.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/services/cards/bank_app.services.cards.iml" filepath="$PROJECT_DIR$/.idea/modules/services/cards/bank_app.services.cards.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/services/cards/bank_app.services.cards.main.iml" filepath="$PROJECT_DIR$/.idea/modules/services/cards/bank_app.services.cards.main.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/services/cards/bank_app.services.cards.test.iml" filepath="$PROJECT_DIR$/.idea/modules/services/cards/bank_app.services.cards.test.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/services/loans/bank_app.services.loans.iml" filepath="$PROJECT_DIR$/.idea/modules/services/loans/bank_app.services.loans.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/services/loans/bank_app.services.loans.main.iml" filepath="$PROJECT_DIR$/.idea/modules/services/loans/bank_app.services.loans.main.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/services/loans/bank_app.services.loans.test.iml" filepath="$PROJECT_DIR$/.idea/modules/services/loans/bank_app.services.loans.test.iml" />
+    </modules>
+  </component>
+</project>

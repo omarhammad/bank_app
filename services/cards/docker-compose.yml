@@ -1,0 +1,17 @@
+version: '3.8'
+services:
+  postgres:
+    image: postgres:15
+    container_name: cards-postgres-db
+    restart: always
+    environment:
+      POSTGRES_USER: accounts
+      POSTGRES_PASSWORD: accounts
+      POSTGRES_DB: bank_accounts
+    ports:
+      - "6001:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+volumes:
+  postgres_data:
