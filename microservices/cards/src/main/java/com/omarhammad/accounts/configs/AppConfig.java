@@ -1,8 +1,6 @@
 package com.omarhammad.accounts.configs;
 
 import com.omarhammad.accounts.utils.audit.AuditAwareSvc;
-import com.omarhammad.accounts.utils.phoneNumberValidator.PhoneNumberValidator;
-import io.swagger.v3.oas.annotations.OpenAPIDefinition;
 import io.swagger.v3.oas.models.OpenAPI;
 import io.swagger.v3.oas.models.info.Contact;
 import io.swagger.v3.oas.models.info.Info;
@@ -21,10 +19,6 @@ public class AppConfig {
         return new ModelMapper();
     }
 
-    @Bean
-    public PhoneNumberValidator phoneNumberValidator() {
-        return new PhoneNumberValidator();
-    }
 
     @Bean
     public AuditAwareSvc auditAwareSvc() {
