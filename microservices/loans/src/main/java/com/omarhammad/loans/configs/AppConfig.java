@@ -1,7 +1,7 @@
 package com.omarhammad.loans.configs;
 
-import com.omarhammad.cards.utils.audit.AuditAwareSvc;
-import com.omarhammad.cards.utils.phoneNumberValidator.PhoneNumberValidator;
+import com.omarhammad.loans.utils.audit.AuditAwareSvc;
+import com.omarhammad.loans.utils.phoneNumberValidator.PhoneNumberValidator;
 import io.swagger.v3.oas.models.OpenAPI;
 import io.swagger.v3.oas.models.info.Contact;
 import io.swagger.v3.oas.models.info.Info;
@@ -34,9 +34,9 @@ public class AppConfig {
     public OpenAPI customOpenAPI() {
         return new OpenAPI()
                 .info(new Info()
-                        .title("Accounts API Documentation")
+                        .title("Loans API Documentation")
                         .version("1.0")
-                        .description("Accounts microservice REST API Documentation")
+                        .description("Loans microservice REST API Documentation")
                         .contact(new Contact()
                                 .name("Omar Hammad")
                                 .email("omar.hammad@gamil.com")

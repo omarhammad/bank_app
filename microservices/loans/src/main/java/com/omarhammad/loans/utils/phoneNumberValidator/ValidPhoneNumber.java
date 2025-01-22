@@ -1,6 +1,5 @@
 package com.omarhammad.loans.utils.phoneNumberValidator;
 
-import com.omarhammad.cards.utils.phoneNumberValidator.PhoneNumberValidator;
 import jakarta.validation.Constraint;
 import jakarta.validation.Payload;
 

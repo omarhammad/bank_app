@@ -69,7 +69,7 @@ public class AccountRestController {
             description = "Update Account and Customer info."
     )
     @ApiResponses({
-            @ApiResponse(responseCode = "204", description = "HTTP Status NO_CONTENT"),
+            @ApiResponse(responseCode = "200", description = "HTTP Status OK"),
             @ApiResponse(responseCode = "500", description = "HTTP Status INTERNAL_SERVER_ERROR",
                     content = @Content(schema = @Schema(implementation = ErrorResponseDTO.class)))
     })
@@ -78,7 +78,7 @@ public class AccountRestController {
 
         accountsService.updateAccountDetails(customerDTO);
 
-        return ResponseEntity.ok(new ResponseDTO(HttpStatus.NO_CONTENT.value(), "Account updated successfully"));
+        return ResponseEntity.ok(new ResponseDTO(HttpStatus.OK.value(), "Account updated successfully"));
 
     }
 
@@ -88,7 +88,7 @@ public class AccountRestController {
             description = "Delete Account and Customer."
     )
     @ApiResponses({
-            @ApiResponse(responseCode = "204", description = "HTTP Status NO_CONTENT"),
+            @ApiResponse(responseCode = "200", description = "HTTP Status OK"),
             @ApiResponse(responseCode = "500", description = "HTTP Status INTERNAL_SERVER_ERROR",
                     content = @Content(schema = @Schema(implementation = ErrorResponseDTO.class)))
     })
@@ -97,7 +97,7 @@ public class AccountRestController {
 
         accountsService.deleteAccountDetails(mobileNumber);
 
-        return ResponseEntity.ok(new ResponseDTO(HttpStatus.NO_CONTENT.value(), "Account deleted successfully"));
+        return ResponseEntity.ok().body(new ResponseDTO(HttpStatus.OK.value(), "Account deleted successfully"));
 
     }
 
