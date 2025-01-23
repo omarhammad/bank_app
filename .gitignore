@@ -11,8 +11,8 @@ Thumbs.db
 
 ### Gradle ###
 **/.gradle/
-gradle/wrapper/gradle-wrapper.jar
-gradle/wrapper/gradle-wrapper.properties
+!gradle/wrapper/gradle-wrapper.jar
+!gradle/wrapper/gradle-wrapper.properties
 
 ### Spring Tool Suite (STS) ###
 **/.apt_generated/
@@ -22,47 +22,19 @@ gradle/wrapper/gradle-wrapper.properties
 **/.settings/
 **/.sts4-cache/
 **/bin/
-!**/src/main/**/bin/
-!**/src/test/**/bin/
 
 ### IntelliJ IDEA ###
 **/.idea/
 *.iws
 *.iml
 *.ipr
-**/out/
-!**/src/main/**/out/
-!**/src/test/**/out/
-
-### NetBeans ###
-**/nbproject/private/
-**/nbbuild/
-**/dist/
-**/nbdist/
-**/.nb-gradle/
-
-### VS Code ###
-**/.vscode/
 
 ### Exclude OS-specific files ###
 *.swp
 *.bak
-*.tmp
 *.~*
-
-### Ignore Node.js files if applicable ###
-node_modules/
-package-lock.json
-yarn.lock
 
 ### Logs ###
 logs/
-*.log
 
-### Ignore Python virtual environments ###
-.env/
-venv/
 
-### Exclude temporary or backup files ###
-*.~*
-*.swp
