@@ -34,18 +34,18 @@ This project showcases the implementation of a scalable banking system where eac
 
 ## Services
 1. **Accounts Service**:
-    - Manage customer accounts (create, update, delete).
-    - Retrieve account details and balances.
-    - Example Endpoint: `POST /accounts` to create a new account.
+   - Manage customer accounts (create, update, delete).
+   - Retrieve account details and balances.
+   - Example Endpoint: `POST /accounts` to create a new account.
 
 2. **Loans Service**:
-    - Handle loan applications, repayments, and interest calculations.
-    - Example Endpoint: `GET /loans/{customerId}` to retrieve loan details.
+   - Handle loan applications, repayments, and interest calculations.
+   - Example Endpoint: `GET /loans/{customerId}` to retrieve loan details.
 
 3. **Cards Service**:
-    - Manage credit and debit cards.
-    - Handle card issuance, transactions, and limits.
-    - Example Endpoint: `POST /cards` to issue a new card.
+   - Manage credit and debit cards.
+   - Handle card issuance, transactions, and limits.
+   - Example Endpoint: `POST /cards` to issue a new card.
 
 ---
 
@@ -70,5 +70,69 @@ This project showcases the implementation of a scalable banking system where eac
    ```bash
    git clone https://github.com/omarhammad/bank_app.git
    cd bank_app
-   ``` 
-----
+   ```
+
+2. Start the PostgreSQL database:
+   ```bash
+   docker-compose up -d
+   ```
+
+3. Build the project:
+   ```bash
+   ./gradlew clean build
+   ```
+
+4. Run specific services:
+   - **Accounts Service**:
+     ```bash
+     ./gradlew :microservices:accounts:bootRun
+     ```
+   - **Loans Service**:
+     ```bash
+     ./gradlew :microservices:loans:bootRun
+     ```
+   - **Cards Service**:
+     ```bash
+     ./gradlew :microservices:cards:bootRun
+     ```
+
+---
+
+## API Endpoints
+### Accounts Service
+- `POST /accounts`: Create a new account.
+- `GET /accounts/{id}`: Retrieve account details.
+- `DELETE /accounts/{id}`: Delete an account.
+
+### Loans Service
+- `POST /loans`: Apply for a loan.
+- `GET /loans/{customerId}`: View loan details for a customer.
+
+### Cards Service
+- `POST /cards`: Issue a new card.
+- `GET /cards/{id}`: Retrieve card details.
+- `PUT /cards/{id}`: Update card limits.
+
+Swagger documentation is available for each service:
+- **Accounts**: `http://localhost:8081/docs`
+- **Loans**: `http://localhost:8082/docs`
+- **Cards**: `http://localhost:8083/docs`
+
+---
+
+## Why Choose This Project?
+- **Scalable Architecture**: Add or remove services effortlessly.
+- **Modern Technologies**: Uses industry-standard tools like Spring Boot, Docker, and PostgreSQL.
+- **Developer-Friendly**: Provides clear API documentation and easy-to-use Gradle-based build systems.
+- **Fast Deployment**: Dockerized setup ensures rapid deployment across environments.
+
+---
+
+## License
+This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for more details.
+
+---
+
+## Contributors
+- **Omar Hammad** - Developer and Maintainer
+---
