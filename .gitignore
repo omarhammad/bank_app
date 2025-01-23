@@ -1,37 +1,68 @@
-HELP.md
-accounts/.gradle
-build/
-!gradle/wrapper/gradle-wrapper.jar
+### Common Artifacts ###
+*.log
+*.tmp
+.DS_Store
+Thumbs.db
+
+### Build Artifacts ###
+**/build/
 !**/src/main/**/build/
 !**/src/test/**/build/
 
-### STS ###
-.apt_generated
-.classpath
-.factorypath
-.project
-.settings
-.springBeans
-.sts4-cache
-bin/
+### Gradle ###
+**/.gradle/
+gradle/wrapper/gradle-wrapper.jar
+gradle/wrapper/gradle-wrapper.properties
+
+### Spring Tool Suite (STS) ###
+**/.apt_generated/
+**/.classpath
+**/.factorypath
+**/.project
+**/.settings/
+**/.sts4-cache/
+**/bin/
 !**/src/main/**/bin/
 !**/src/test/**/bin/
 
 ### IntelliJ IDEA ###
-accounts/.idea
+**/.idea/
 *.iws
 *.iml
 *.ipr
-out/
+**/out/
 !**/src/main/**/out/
 !**/src/test/**/out/
 
 ### NetBeans ###
-/nbproject/private/
-/nbbuild/
-/dist/
-/nbdist/
-/.nb-gradle/
+**/nbproject/private/
+**/nbbuild/
+**/dist/
+**/nbdist/
+**/.nb-gradle/
 
 ### VS Code ###
-.vscode/
+**/.vscode/
+
+### Exclude OS-specific files ###
+*.swp
+*.bak
+*.tmp
+*.~*
+
+### Ignore Node.js files if applicable ###
+node_modules/
+package-lock.json
+yarn.lock
+
+### Logs ###
+logs/
+*.log
+
+### Ignore Python virtual environments ###
+.env/
+venv/
+
+### Exclude temporary or backup files ###
+*.~*
+*.swp
