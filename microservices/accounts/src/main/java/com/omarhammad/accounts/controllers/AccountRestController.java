@@ -50,12 +50,12 @@ public class AccountRestController {
             summary = "Fetch Account",
             description = "Fetch account and it's customer info by mobile number."
     )
-    @GetMapping("/{mobileNumber}")
     @ApiResponses({
             @ApiResponse(responseCode = "200", description = "HTTP Status OK"),
             @ApiResponse(responseCode = "500", description = "HTTP Status INTERNAL_SERVER_ERROR",
                     content = @Content(schema = @Schema(implementation = ErrorResponseDTO.class)))
     })
+    @GetMapping("/{mobileNumber}")
     public ResponseEntity<CustomerDTO> fetchAccountDetails(@PathVariable String mobileNumber) {
 
         CustomerDTO customerDTO = accountsService.fetchAccountDetails(mobileNumber);
