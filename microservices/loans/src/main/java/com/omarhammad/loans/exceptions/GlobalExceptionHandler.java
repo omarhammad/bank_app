@@ -6,6 +6,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -52,15 +53,52 @@ public class GlobalExceptionHandler {
                 );
     }
 
+    @ExceptionHandler(LoanAlreadyExistsException.class)
+    public ResponseEntity<ErrorResponseDTO> handleLoanAlreadyExistsException(LoanAlreadyExistsException exception,
+                                                                             WebRequest webRequest) {
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                .body(new ErrorResponseDTO(
+                        webRequest.getDescription(false),
+                        HttpStatus.BAD_REQUEST,
+                        exception.getMessage(),
+                        LocalDateTime.now()
+                ));
+    }
+
     @ExceptionHandler(MethodArgumentNotValidException.class)
     public ResponseEntity<ErrorResponseDTO> handleMethodArgumentNotValidException(MethodArgumentNotValidException exception,
                                                                                   WebRequest webRequest) {
 
+        String message = getErrorMessage(exception.getBindingResult());
         return ResponseEntity.status(HttpStatus.BAD_REQUEST)
                 .body(
                         new ErrorResponseDTO(
                                 webRequest.getDescription(false),
                                 HttpStatus.BAD_REQUEST,
+                                message,
+                                LocalDateTime.now()
+                        )
+                );
+    }
+
+    private String getErrorMessage(BindingResult bindingResult) {
+        StringBuilder errorMessage = new StringBuilder();
+        bindingResult.getFieldErrors().forEach(fieldError -> {
+            errorMessage.append(fieldError.getField()).append(" - ").append(fieldError.getDefaultMessage()).append("; ");
+        });
+        return errorMessage.toString();
+    }
+
+
+    @ExceptionHandler(Exception.class)
+    public ResponseEntity<ErrorResponseDTO> handleMethodGlobalException(Exception exception,
+                                                                        WebRequest webRequest) {
+
+        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                .body(
+                        new ErrorResponseDTO(
+                                webRequest.getDescription(false),
+                                HttpStatus.INTERNAL_SERVER_ERROR,
                                 exception.getMessage(),
                                 LocalDateTime.now()
                         )

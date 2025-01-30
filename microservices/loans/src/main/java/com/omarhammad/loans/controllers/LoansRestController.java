@@ -37,11 +37,11 @@ public class LoansRestController {
     @ApiResponses({
             @ApiResponse(responseCode = "200", description = "HTTP Status OK", content = @Content(schema = @Schema(implementation = LoanDTO.class))),
             @ApiResponse(responseCode = "400", description = "HTTP Status Bad Request", content = @Content(schema = @Schema(implementation = ErrorResponseDTO.class))),
+            @ApiResponse(responseCode = "404", description = "HTTP Status NOT FOUND", content = @Content(schema = @Schema(implementation = ErrorResponseDTO.class))),
             @ApiResponse(responseCode = "500", description = "HTTP Status Internal Server Error", content = @Content(schema = @Schema(implementation = ErrorResponseDTO.class)))
     })
     @GetMapping("")
-    public ResponseEntity<LoanDTO> fetchLoanDetails(@RequestParam
-                                                    @Schema(example = "+32465123456") String mobileNumber) {
+    public ResponseEntity<LoanDTO> fetchLoanDetails(@RequestParam @Schema(example = "+32465123456") String mobileNumber) {
         logger.info("mobile number : {}", mobileNumber);
         LoanDTO loanDTO = loansService.getLoan(mobileNumber);
         return ResponseEntity.ok(loanDTO);
@@ -49,7 +49,11 @@ public class LoansRestController {
 
 
     @Operation(summary = "Create Loan REST API", description = "REST API  to create a new loan for a customer")
-    @ApiResponses
+    @ApiResponses({
+            @ApiResponse(responseCode = "201", description = "HTTP Status CREATED", content = @Content(schema = @Schema(implementation = ResponseDTO.class))),
+            @ApiResponse(responseCode = "400", description = "HTTP Status BAD REQUEST", content = @Content(schema = @Schema(implementation = ErrorResponseDTO.class))),
+            @ApiResponse(responseCode = "500", description = "HTTP Status INTERNAL SERVER ERROR", content = @Content(schema = @Schema(implementation = ErrorResponseDTO.class)))
+    })
     @PostMapping("/")
     public ResponseEntity<ResponseDTO> createLoan(@RequestBody @Valid LoanDTO loanDTO) {
 
@@ -58,8 +62,9 @@ public class LoansRestController {
                 .body(new ResponseDTO(HttpStatus.CREATED, "Loan created successfully"));
     }
 
-    @PutMapping("/")
+    @PutMapping("")
     public ResponseEntity<ResponseDTO> updateLoan(@RequestBody @Valid LoanDTO loanDTO) {
+        loansService.updateLoan(loanDTO);
         return ResponseEntity.status(HttpStatus.NO_CONTENT)
                 .body(new ResponseDTO(HttpStatus.NO_CONTENT, "Loan updated Successfully"));
     }
@@ -72,7 +77,7 @@ public class LoansRestController {
                         " %d amount paid successfully".formatted(repaymentDTO.getAmount())));
     }
 
-    @DeleteMapping("/")
+    @DeleteMapping("")
     public ResponseEntity<ResponseDTO> deleteLoan(@RequestParam @ValidPhoneNumber String mobileNumber) {
 
         return ResponseEntity.ok(new ResponseDTO(HttpStatus.OK, "Loan deleted successfully"));

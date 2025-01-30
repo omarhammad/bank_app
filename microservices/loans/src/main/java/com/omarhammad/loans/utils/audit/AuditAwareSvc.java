@@ -9,6 +9,6 @@ public class AuditAwareSvc implements AuditorAware<String> {
     @Override
 
     public Optional<String> getCurrentAuditor() {
-        return Optional.of("ACCOUNTS_MS");
+        return Optional.of("LOANS_MS");
     }
 }

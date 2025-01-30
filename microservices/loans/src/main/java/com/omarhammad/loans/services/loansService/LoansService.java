@@ -4,6 +4,7 @@ import com.omarhammad.loans.controllers.dtos.LoanDTO;
 import com.omarhammad.loans.controllers.dtos.RepaymentDTO;
 import com.omarhammad.loans.domain.Loan;
 import com.omarhammad.loans.exceptions.InvalidMobileNumberException;
+import com.omarhammad.loans.exceptions.LoanAlreadyExistsException;
 import com.omarhammad.loans.repositories.loanRepo.LoanRepository;
 import com.omarhammad.loans.utils.phoneNumberValidator.PhoneNumberValidator;
 import jakarta.persistence.EntityNotFoundException;
@@ -34,6 +35,20 @@ public class LoansService implements ILoansService {
 
     @Override
     public void createLoan(LoanDTO loanDTO) {
+        Loan loan = modelMapper.map(loanDTO, Loan.class);
+        loanRepository.findLoanByMobileNumber(loan.getMobileNumber())
+                .ifPresent((l) -> {
+                    throw new LoanAlreadyExistsException(("Loan Already Exists for " +
+                            "customer with mobile number %s").formatted(l.getMobileNumber()));
+                });
+
+        loanRepository.findLoanByLoanNumber(loan.getLoanNumber())
+                .ifPresent((l) -> {
+                    throw new LoanAlreadyExistsException(("Loan Already Exists with " +
+                            "loan number %s").formatted(l.getLoanNumber()));
+                });
+
+        loanRepository.save(loan);
 
     }
 
