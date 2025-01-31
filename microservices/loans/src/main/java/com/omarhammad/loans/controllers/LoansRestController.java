@@ -13,6 +13,7 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
+import jakarta.validation.constraints.Pattern;
 import lombok.AllArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -62,16 +63,25 @@ public class LoansRestController {
                 .body(new ResponseDTO(HttpStatus.CREATED, "Loan created successfully"));
     }
 
-    @PutMapping("")
+    @Operation(summary = "Update Loan REST API", description = "REST API TO update a loan information")
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", description = "HTTP Status OK", content = @Content(schema = @Schema(implementation = ResponseDTO.class))),
+            @ApiResponse(responseCode = "400", description = "HTTP Status BAD_REQUEST"),
+            @ApiResponse(responseCode = "404", description = "HTTP Status NOT_FOUND"),
+            @ApiResponse(responseCode = "500", description = "HTTP Status INTERNAL_SERVER_ERROR")
+    })
+    @PutMapping("/")
     public ResponseEntity<ResponseDTO> updateLoan(@RequestBody @Valid LoanDTO loanDTO) {
+
         loansService.updateLoan(loanDTO);
-        return ResponseEntity.status(HttpStatus.NO_CONTENT)
-                .body(new ResponseDTO(HttpStatus.NO_CONTENT, "Loan updated Successfully"));
+        return ResponseEntity.status(HttpStatus.OK)
+                .body(new ResponseDTO(HttpStatus.OK, "Loan updated Successfully"));
     }
 
 
     @PostMapping("/{loanId}/repayment")
-    public ResponseEntity<ResponseDTO> loanRepayment(@RequestBody @Valid RepaymentDTO repaymentDTO) {
+    public ResponseEntity<ResponseDTO> loanRepayment(@RequestBody @Valid RepaymentDTO repaymentDTO, @PathVariable Long loanId) {
+        loansService.loanRepayment(loanId, repaymentDTO);
         return ResponseEntity.status(HttpStatus.NO_CONTENT)
                 .body(new ResponseDTO(HttpStatus.NO_CONTENT,
                         " %d amount paid successfully".formatted(repaymentDTO.getAmount())));

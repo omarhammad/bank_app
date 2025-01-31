@@ -54,6 +54,13 @@ public class LoansService implements ILoansService {
 
     @Override
     public void updateLoan(LoanDTO loanDTO) {
+        Loan loan = modelMapper.map(loanDTO, Loan.class);
+
+        Long loanId = loanRepository.findLoanByLoanNumber(loanDTO.getLoanNumber()).orElseThrow(() ->
+                new EntityNotFoundException("Loan with %s not found!".formatted(loanDTO.getLoanNumber()))).getId();
+
+        loan.setId(loanId);
+        loanRepository.save(loan);
 
     }
 
