@@ -42,7 +42,7 @@ public class LoansRestController {
             @ApiResponse(responseCode = "500", description = "HTTP Status Internal Server Error", content = @Content(schema = @Schema(implementation = ErrorResponseDTO.class)))
     })
     @GetMapping("")
-    public ResponseEntity<LoanDTO> fetchLoanDetails(@RequestParam @Schema(example = "+32465123456") String mobileNumber) {
+    public ResponseEntity<LoanDTO> fetchLoanDetails(@RequestParam @ValidPhoneNumber @Schema(example = "+32465123456") String mobileNumber) {
         logger.info("mobile number : {}", mobileNumber);
         LoanDTO loanDTO = loansService.getLoan(mobileNumber);
         return ResponseEntity.ok(loanDTO);
@@ -93,9 +93,16 @@ public class LoansRestController {
                         " %d amount paid successfully".formatted(repaymentDTO.getAmount())));
     }
 
+    @Operation(summary = "Delete loan REST API", description = "REST API to delete a customer's loan")
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", description = "HTTP Status OK", content = @Content(schema = @Schema(implementation = ResponseDTO.class))),
+            @ApiResponse(responseCode = "400", description = "HTTP Status BAD_REQUEST", content = @Content(schema = @Schema(implementation = ErrorResponseDTO.class))),
+            @ApiResponse(responseCode = "404", description = "HTTP Status NOT_FOUND", content = @Content(schema = @Schema(implementation = ErrorResponseDTO.class))),
+            @ApiResponse(responseCode = "500", description = "HTTP Status INTERNAL_SERVER_ERROR", content = @Content(schema = @Schema(implementation = ErrorResponseDTO.class)))
+    })
     @DeleteMapping("")
     public ResponseEntity<ResponseDTO> deleteLoan(@RequestParam @ValidPhoneNumber String mobileNumber) {
-
+        loansService.deleteLoan(mobileNumber);
         return ResponseEntity.ok(new ResponseDTO(HttpStatus.OK, "Loan deleted successfully"));
     }
 }

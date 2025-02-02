@@ -4,7 +4,6 @@ import com.omarhammad.loans.controllers.dtos.LoanDTO;
 import com.omarhammad.loans.controllers.dtos.RepaymentDTO;
 import com.omarhammad.loans.domain.Loan;
 import com.omarhammad.loans.domain.Repayment;
-import com.omarhammad.loans.exceptions.InvalidMobileNumberException;
 import com.omarhammad.loans.exceptions.LoanAlreadyExistsException;
 import com.omarhammad.loans.repositories.loanRepo.LoanRepository;
 import com.omarhammad.loans.repositories.repaymentRepo.RepaymentRepository;
@@ -26,10 +25,6 @@ public class LoansService implements ILoansService {
 
     @Override
     public LoanDTO getLoan(String mobileNumber) {
-
-        if (!phoneNumberValidator.isValid(mobileNumber, null))
-            throw new InvalidMobileNumberException("Invalid mobile number");
-
 
         Loan loan = loanRepository.findLoanByMobileNumber(mobileNumber)
                 .orElseThrow(() -> (new EntityNotFoundException("Loan with %s not found".formatted(mobileNumber))));
@@ -87,9 +82,14 @@ public class LoansService implements ILoansService {
     }
 
     @Override
+    @Transactional
     public void deleteLoan(String mobileNumber) {
-        if (phoneNumberValidator.isValid(mobileNumber, null))
-            throw new InvalidMobileNumberException("Invalid mobile number");
+
+        Loan loan = loanRepository.findLoanByMobileNumber(mobileNumber)
+                .orElseThrow(() -> new EntityNotFoundException("Loan with this mobile number %s not found".formatted(mobileNumber)));
+
+        loanRepository.delete(loan);
+
 
     }
 }

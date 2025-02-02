@@ -2,6 +2,8 @@ package com.omarhammad.loans.exceptions;
 
 import com.omarhammad.loans.controllers.dtos.ErrorResponseDTO;
 import jakarta.persistence.EntityNotFoundException;
+import jakarta.validation.ConstraintViolation;
+import jakarta.validation.ConstraintViolationException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
@@ -39,19 +41,25 @@ public class GlobalExceptionHandler {
                 );
     }
 
-    @ExceptionHandler(InvalidMobileNumberException.class)
-    public ResponseEntity<ErrorResponseDTO> handleInvalidMobileNumberException(InvalidMobileNumberException exception,
+
+    @ExceptionHandler(ConstraintViolationException.class)
+    public ResponseEntity<ErrorResponseDTO> handelConstraintViolationException(ConstraintViolationException exception,
                                                                                WebRequest webRequest) {
+
+        String message = exception.getConstraintViolations()
+                .stream()
+                .map(ConstraintViolation::getMessageTemplate)
+                .reduce("", (acc, cv) -> acc.isEmpty() ? cv : ";" + cv);
+
         return ResponseEntity.status(HttpStatus.BAD_REQUEST)
-                .body(
-                        new ErrorResponseDTO(
-                                webRequest.getDescription(false),
-                                HttpStatus.BAD_REQUEST,
-                                exception.getMessage(),
-                                LocalDateTime.now()
-                        )
-                );
+                .body(new ErrorResponseDTO(
+                        webRequest.getDescription(false),
+                        HttpStatus.BAD_REQUEST,
+                        message,
+                        LocalDateTime.now()
+                ));
     }
+
 
     @ExceptionHandler(LoanAlreadyExistsException.class)
     public ResponseEntity<ErrorResponseDTO> handleLoanAlreadyExistsException(LoanAlreadyExistsException exception,
