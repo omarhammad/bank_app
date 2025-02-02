@@ -1,0 +1,36 @@
+package com.omarhammad.cards.domain;
+
+import jakarta.persistence.*;
+import lombok.*;
+
+import java.util.List;
+
+@Setter
+@Getter
+@ToString
+@AllArgsConstructor
+@NoArgsConstructor
+@Entity
+public class Card extends BaseEntity {
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private Long id;
+
+    private String mobileNumber;
+
+    private String cardNumber;
+
+    @Enumerated(EnumType.STRING)
+    private CardType cardType;
+
+    private String pinCode;
+
+    private Long totalLimit;
+
+    @OneToMany(mappedBy = "card")
+    private List<Transaction> transactions;
+
+    private Long availableAmount;
+
+
+}

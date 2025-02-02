@@ -13,7 +13,6 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
-import jakarta.validation.constraints.Pattern;
 import lombok.AllArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -24,10 +23,10 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping(value = "/api/loans", produces = {MediaType.APPLICATION_JSON_VALUE})
-@Tag(name = "Loans", description = "Loans Management APIs")
 @AllArgsConstructor
 @Validated
+@Tag(name = "Loans", description = "Loans Management APIs")
+@RequestMapping(value = "/api/loans", produces = {MediaType.APPLICATION_JSON_VALUE})
 public class LoansRestController {
 
 
