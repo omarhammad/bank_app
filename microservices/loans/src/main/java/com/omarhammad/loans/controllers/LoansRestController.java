@@ -78,12 +78,18 @@ public class LoansRestController {
                 .body(new ResponseDTO(HttpStatus.OK, "Loan updated Successfully"));
     }
 
-
+    @Operation(summary = "Loan Repayment REST API", description = "REST API for customers to pay the the loan")
+    @ApiResponses({
+            @ApiResponse(responseCode = "201", description = "HTTP Status CREATED", content = @Content(schema = @Schema(implementation = ResponseDTO.class))),
+            @ApiResponse(responseCode = "404", description = "HTTP Status NOT_FOUND", content = @Content(schema = @Schema(implementation = ErrorResponseDTO.class))),
+            @ApiResponse(responseCode = "400", description = "HTTP Status BAD_REQUEST", content = @Content(schema = @Schema(implementation = ErrorResponseDTO.class))),
+            @ApiResponse(responseCode = "500", description = "HTTP Status INTERNAL_SERVER_ERROR", content = @Content(schema = @Schema(implementation = ErrorResponseDTO.class)))
+    })
     @PostMapping("/{loanId}/repayment")
-    public ResponseEntity<ResponseDTO> loanRepayment(@RequestBody @Valid RepaymentDTO repaymentDTO, @PathVariable Long loanId) {
+    public ResponseEntity<ResponseDTO> loanRepayment(@RequestBody @Valid RepaymentDTO repaymentDTO, @PathVariable String loanId) {
         loansService.loanRepayment(loanId, repaymentDTO);
-        return ResponseEntity.status(HttpStatus.NO_CONTENT)
-                .body(new ResponseDTO(HttpStatus.NO_CONTENT,
+        return ResponseEntity.status(HttpStatus.CREATED)
+                .body(new ResponseDTO(HttpStatus.CREATED,
                         " %d amount paid successfully".formatted(repaymentDTO.getAmount())));
     }
 

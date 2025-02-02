@@ -3,19 +3,23 @@ package com.omarhammad.loans.services.loansService;
 import com.omarhammad.loans.controllers.dtos.LoanDTO;
 import com.omarhammad.loans.controllers.dtos.RepaymentDTO;
 import com.omarhammad.loans.domain.Loan;
+import com.omarhammad.loans.domain.Repayment;
 import com.omarhammad.loans.exceptions.InvalidMobileNumberException;
 import com.omarhammad.loans.exceptions.LoanAlreadyExistsException;
 import com.omarhammad.loans.repositories.loanRepo.LoanRepository;
+import com.omarhammad.loans.repositories.repaymentRepo.RepaymentRepository;
 import com.omarhammad.loans.utils.phoneNumberValidator.PhoneNumberValidator;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.AllArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @AllArgsConstructor
 public class LoansService implements ILoansService {
 
+    private final RepaymentRepository repaymentRepository;
     private LoanRepository loanRepository;
     private ModelMapper modelMapper;
     private PhoneNumberValidator phoneNumberValidator;
@@ -65,8 +69,21 @@ public class LoansService implements ILoansService {
     }
 
     @Override
-    public void loanRepayment(Long loanId, RepaymentDTO repaymentDTO) {
+    @Transactional
+    public void loanRepayment(String loanId, RepaymentDTO repaymentDTO) {
 
+
+        Loan loan = loanRepository.findLoanByLoanNumber(loanId)
+                .orElseThrow(() -> new EntityNotFoundException("Loan with %s number not found".formatted(loanId)));
+
+        Repayment repayment = new Repayment();
+        repayment.setAmountPaid(repaymentDTO.getAmount());
+        repayment.setLoan(loan);
+
+        Repayment savedRepayment = repaymentRepository.save(repayment);
+
+        loan.setOutstandingAmount(loan.getOutstandingAmount() - savedRepayment.getAmountPaid());
+        loanRepository.save(loan);
     }
 
     @Override

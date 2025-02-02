@@ -11,7 +11,7 @@ public interface ILoansService {
 
     void updateLoan(LoanDTO loanDTO);
 
-    void loanRepayment(Long loanId, RepaymentDTO repaymentDTO);
+    void loanRepayment(String loanId, RepaymentDTO repaymentDTO);
 
     void deleteLoan(String mobileNumber);
 
