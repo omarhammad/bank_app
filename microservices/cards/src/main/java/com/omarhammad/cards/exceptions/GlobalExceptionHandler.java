@@ -100,7 +100,7 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(InvalidTransactionTypeException.class)
     public ResponseEntity<ErrorResponseDTO> handleInvalidTransactionTypeException(InvalidTransactionTypeException exception,
-                                                                           WebRequest webRequest) {
+                                                                                  WebRequest webRequest) {
         return ResponseEntity.status(HttpStatus.BAD_REQUEST)
                 .body(new ErrorResponseDTO(
                         webRequest.getDescription(false),
@@ -125,7 +125,7 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(InvalidOldNewPinCodeMatchException.class)
     public ResponseEntity<ErrorResponseDTO> handleInvalidOldNewPinCodeMatchException(InvalidOldNewPinCodeMatchException exception,
-                                                                 WebRequest webRequest) {
+                                                                                     WebRequest webRequest) {
         return ResponseEntity.status(HttpStatus.BAD_REQUEST)
                 .body(new ErrorResponseDTO(
                         webRequest.getDescription(false),
@@ -149,6 +149,19 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(InvalidWithdrawTransaction.class)
     public ResponseEntity<ErrorResponseDTO> handleInvalidWithdrawTransaction(InvalidWithdrawTransaction exception,
+                                                                             WebRequest webRequest) {
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                .body(new ErrorResponseDTO(
+                        webRequest.getDescription(false),
+                        HttpStatus.BAD_REQUEST,
+                        exception.getMessage(),
+                        LocalDateTime.now()
+                ));
+    }
+
+
+    @ExceptionHandler(AmountExceedsLimitException.class)
+    public ResponseEntity<ErrorResponseDTO> handleAmountExceedsLimitException(AmountExceedsLimitException exception,
                                                                               WebRequest webRequest) {
         return ResponseEntity.status(HttpStatus.BAD_REQUEST)
                 .body(new ErrorResponseDTO(

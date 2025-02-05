@@ -2,7 +2,6 @@ package com.omarhammad.cards.controllers;
 
 import com.omarhammad.cards.controllers.dto.*;
 import com.omarhammad.cards.services.cardServices.ICardService;
-import com.omarhammad.cards.utils.phoneNumberValidator.ValidPhoneNumber;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -10,6 +9,7 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
+import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import org.hibernate.validator.constraints.CreditCardNumber;
 import org.springframework.http.HttpStatus;
@@ -47,14 +47,16 @@ public class CardsRestController {
     @ApiResponses({
             @ApiResponse(responseCode = "200", description = "HTTP Status OK", content = @Content(schema = @Schema(implementation = CardDTO.class))),
             @ApiResponse(responseCode = "400", description = "HTTP Status BAD_REQUEST", content = @Content(schema = @Schema(implementation = ErrorResponseDTO.class))),
+            @ApiResponse(responseCode = "401", description = "HTTP Status UNAUTHORIZED", content = @Content(schema = @Schema(implementation = ErrorResponseDTO.class))),
             @ApiResponse(responseCode = "404", description = "HTTP Status NOT_FOUND", content = @Content(schema = @Schema(implementation = ErrorResponseDTO.class))),
             @ApiResponse(responseCode = "500", description = "HTTP Status INTERNAL_SERVER_ERROR", content = @Content(schema = @Schema(implementation = ErrorResponseDTO.class)))
     })
     @GetMapping("")
-    public ResponseEntity<CardDTO> getCardDetails(@RequestParam @ValidPhoneNumber String mobileNumber) {
+    public ResponseEntity<CardDTO> getCardDetails(@RequestParam @CreditCardNumber(ignoreNonDigitCharacters = true, message = "Invalid card number") String cardNumber,
+                                                  @RequestParam @Size(min = 4, max = 4, message = "Pin code should be 4 digits") String pinCode) {
 
-        CardDTO cardDTO = cardService.getCard(mobileNumber);
-        return ResponseEntity.ok(cardDTO);
+        CardDTO CardDTO = cardService.getCard(cardNumber, pinCode);
+        return ResponseEntity.ok(CardDTO);
     }
 
 
@@ -66,9 +68,9 @@ public class CardsRestController {
 
     })
     @PostMapping("")
-    public ResponseEntity<ResponseDTO> createCard(@RequestBody @Valid CardDTO cardDTO) {
+    public ResponseEntity<ResponseDTO> createCard(@RequestBody @Valid CreateCardDTO createCardDTO) {
 
-        cardService.createCard(cardDTO);
+        cardService.createCard(createCardDTO);
         return ResponseEntity.status(HttpStatus.CREATED)
                 .body(new ResponseDTO(HttpStatus.CREATED, "Card Created Successfully"));
     }
@@ -82,7 +84,7 @@ public class CardsRestController {
             @ApiResponse(responseCode = "404", description = "HTTP Status NOT_FOUND", content = @Content(schema = @Schema(implementation = ErrorResponseDTO.class))),
             @ApiResponse(responseCode = "500", description = "HTTP Status INTERNAL_SERVER_ERROR", content = @Content(schema = @Schema(implementation = ErrorResponseDTO.class))),
     })
-    @PutMapping
+    @PutMapping("")
     public ResponseEntity<ResponseDTO> updateCard(@RequestBody @Valid UpdateCardDTO updateCardDTO) {
 
         cardService.updateCard(updateCardDTO);
@@ -100,11 +102,11 @@ public class CardsRestController {
             @ApiResponse(responseCode = "409", description = "HTTP Status CONFLICT", content = @Content(schema = @Schema(implementation = ErrorResponseDTO.class))),
             @ApiResponse(responseCode = "500", description = "HTTP Status INTERNAL_SERVER_ERROR", content = @Content(schema = @Schema(implementation = ErrorResponseDTO.class))),
     })
-    @PutMapping("/{cardNumber}/pincode")
+    @PatchMapping("/{cardNumber}/pincode")
     public ResponseEntity<ResponseDTO> changePinCode(@RequestBody @Valid PinCodeChangeDTO pinCodeChangeDTO, @PathVariable @CreditCardNumber(ignoreNonDigitCharacters = true, message = "Invalid card number")
     String cardNumber) {
 
-        cardService.changePinCode(cardNumber,pinCodeChangeDTO);
+        cardService.changePinCode(cardNumber, pinCodeChangeDTO);
 
         return ResponseEntity.status(HttpStatus.OK)
                 .body(new ResponseDTO(HttpStatus.OK, "Pin code changed successfully"));
@@ -125,6 +127,7 @@ public class CardsRestController {
         return ResponseEntity.status(HttpStatus.OK)
                 .body(new ResponseDTO(HttpStatus.OK, "Card deleted successfully"));
     }
+
 
     @Operation(summary = "Transaction REST API", description = "REST API to make a transaction for a customer's card")
     @ApiResponses({

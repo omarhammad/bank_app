@@ -2,14 +2,12 @@ package com.omarhammad.cards.services.cardServices;
 
 import com.omarhammad.cards.controllers.dto.*;
 import jakarta.validation.Valid;
-import org.hibernate.validator.constraints.CreditCardNumber;
-import org.springframework.stereotype.Repository;
 
 public interface ICardService {
 
-    CardDTO getCard(String mobileNumber);
+    CardDTO getCard(String cardNumber,String pinCode);
 
-    void createCard(CardDTO cardDTO);
+    void createCard(CreateCardDTO createCardDTO);
 
     void updateCard(UpdateCardDTO cardDTO);
 

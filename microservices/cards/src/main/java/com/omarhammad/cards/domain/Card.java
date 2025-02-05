@@ -31,7 +31,7 @@ public class Card extends BaseEntity {
 
     private Long balance;
 
-    @OneToMany(mappedBy = "card")
+    @OneToMany(mappedBy = "card",cascade = CascadeType.ALL)
     private List<Transaction> transactions;
 
 

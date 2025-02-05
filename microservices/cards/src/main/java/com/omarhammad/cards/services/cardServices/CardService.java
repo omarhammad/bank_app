@@ -25,31 +25,35 @@ public class CardService implements ICardService {
     private PasswordEncoder passwordEncoder;
 
     @Override
-    public CardDTO getCard(String mobileNumber) {
+    public CardDTO getCard(String cardNumber, String pinCode) {
 
-        Card card = cardsRepository.findCardByMobileNumber(mobileNumber)
-                .orElseThrow(() -> new EntityNotFoundException("Card with this mobile number %s not found".formatted(mobileNumber)));
+        Card card = cardsRepository.findCardByCardNumber(cardNumber)
+                .orElseThrow(() -> new EntityNotFoundException("Card with this card number %s not found".formatted(cardNumber)));
 
-        card.setPinCode(null);
+
+        if (!verifyPinCode(card.getPinCode(), pinCode))
+            throw new InvalidPinCodeException("Invalid Pin Code! try again");
+
 
         return modelMapper.map(card, CardDTO.class);
     }
 
     @Override
-    public void createCard(CardDTO cardDTO) {
+    public void createCard(CreateCardDTO createCardDTO) {
 
-        cardsRepository.findCardByMobileNumber(cardDTO.getMobileNumber()).ifPresent((c) -> {
+        cardsRepository.findCardByMobileNumber(createCardDTO.getMobileNumber()).ifPresent((c) -> {
             throw new CardAlreadyExistsException("Card with this mobile number %s already exists".formatted(c.getMobileNumber()));
         });
 
-        cardsRepository.findCardByCardNumber(cardDTO.getCardNumber()).ifPresent((c) -> {
+        cardsRepository.findCardByCardNumber(createCardDTO.getCardNumber()).ifPresent((c) -> {
             throw new CardAlreadyExistsException("Card with this card number %s already exists".formatted(c.getCardNumber()));
         });
 
 
-        Card card = modelMapper.map(cardDTO, Card.class);
+        Card card = modelMapper.map(createCardDTO, Card.class);
 
-        card.setCardType(CardType.fromString(cardDTO.getCardType()));
+        card.setCardType(CardType.fromString(createCardDTO.getCardType()));
+        card.setBalance(0L);
 
         String encryptedPinCode = passwordEncoder.encode(card.getPinCode());
         card.setPinCode(encryptedPinCode);
@@ -142,9 +146,14 @@ public class CardService implements ICardService {
 
         Long transactionAmount = transaction.getAmount();
 
+
+        if (transactionAmount > card.getTotalLimit())
+            throw new AmountExceedsLimitException("The amount exceeds the total limit");
+
         switch (transaction.getTransactionType()) {
             case TransactionType.DEPOSIT -> card.setBalance(balance + transactionAmount);
             case TransactionType.WITHDRAW -> {
+
                 if (balance < transactionAmount)
                     throw new InvalidWithdrawTransaction("Your Balance is not sufficient");
 
