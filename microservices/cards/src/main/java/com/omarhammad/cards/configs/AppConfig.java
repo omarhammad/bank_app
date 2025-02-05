@@ -10,6 +10,9 @@ import org.modelmapper.ModelMapper;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
+import org.springframework.security.crypto.bcrypt.BCrypt;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 @Configuration
 @EnableJpaAuditing(auditorAwareRef = "auditAwareSvc")
@@ -28,6 +31,12 @@ public class AppConfig {
     @Bean
     public AuditAwareSvc auditAwareSvc() {
         return new AuditAwareSvc();
+    }
+
+
+    @Bean
+    public PasswordEncoder passwordEncode() {
+        return new BCryptPasswordEncoder();
     }
 
     @Bean

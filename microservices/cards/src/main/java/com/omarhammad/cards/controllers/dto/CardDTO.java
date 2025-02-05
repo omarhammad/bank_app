@@ -1,5 +1,6 @@
 package com.omarhammad.cards.controllers.dto;
 
+import com.omarhammad.cards.domain.CardType;
 import com.omarhammad.cards.utils.phoneNumberValidator.ValidPhoneNumber;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.*;
@@ -16,12 +17,12 @@ public class CardDTO {
     @NotEmpty(message = "mobile number can't be null or empty")
     private String mobileNumber;
 
-    @Schema(description = "Card number of the card", example = "7992-7398-713")
+    @Schema(description = "Card number of the card with 'luhn-algorithm' using https://www.dcode.fr/luhn-algorithm", example = "7992-7398-713")
     @NotEmpty(message = "Card number can't be empty or null")
     @CreditCardNumber(ignoreNonDigitCharacters = true, message = "Invalid card number")
     private String cardNumber;
 
-    @Schema(description = "The type of the card", example = "[Credit, Debit]")
+    @Schema(description = "The type of the card", example = "Debit")
     @NotEmpty(message = "Card type can't be empty or null")
     private String cardType;
 
@@ -33,9 +34,6 @@ public class CardDTO {
     @Positive(message = "Total limit should be greater than zero")
     private Long totalLimit;
 
-    @Schema(description = " the amount the card has", example = "10000")
-    @PositiveOrZero(message = "Available amount should be zero or greater")
-    private Long availableAmount;
 
 
 }

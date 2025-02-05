@@ -16,8 +16,10 @@ public class Card extends BaseEntity {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
+    @Column(unique = true)
     private String mobileNumber;
 
+    @Column(unique = true)
     private String cardNumber;
 
     @Enumerated(EnumType.STRING)
@@ -27,10 +29,11 @@ public class Card extends BaseEntity {
 
     private Long totalLimit;
 
+    private Long availableAmount;
+
     @OneToMany(mappedBy = "card")
     private List<Transaction> transactions;
 
-    private Long availableAmount;
 
 
 }
