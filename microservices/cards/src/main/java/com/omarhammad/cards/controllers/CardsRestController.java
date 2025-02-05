@@ -1,9 +1,7 @@
 package com.omarhammad.cards.controllers;
 
-import com.omarhammad.cards.controllers.dto.CardDTO;
-import com.omarhammad.cards.controllers.dto.ErrorResponseDTO;
-import com.omarhammad.cards.controllers.dto.ResponseDTO;
-import com.omarhammad.cards.controllers.dto.UpdateCardDTO;
+import com.omarhammad.cards.controllers.dto.*;
+import com.omarhammad.cards.domain.Transaction;
 import com.omarhammad.cards.services.cardServices.ICardService;
 import com.omarhammad.cards.utils.phoneNumberValidator.ValidPhoneNumber;
 import io.swagger.v3.oas.annotations.Operation;
@@ -14,6 +12,7 @@ import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
+import org.hibernate.validator.constraints.CreditCardNumber;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -36,8 +35,8 @@ public class CardsRestController {
      *    2) Create Card - DONE
      *    3) Update Card - DONE
      *    4) Delete Card - DONE
-     *    5) Withdraw Money
-     *    6) Deposit Money
+     *    5) Withdraw Money - DONE
+     *    6) Deposit Money - DONE
      *    7) Change PinCode
      *    8) Request Current PinCode with email
      *    9) Block Card
@@ -82,6 +81,7 @@ public class CardsRestController {
     @ApiResponses({
             @ApiResponse(responseCode = "200", description = "HTTP Status OK", content = @Content(schema = @Schema(implementation = ResponseDTO.class))),
             @ApiResponse(responseCode = "400", description = "HTTP Status BAD_REQUEST", content = @Content(schema = @Schema(implementation = ErrorResponseDTO.class))),
+            @ApiResponse(responseCode = "401", description = "HTTP Status UNAUTHORIZED", content = @Content(schema = @Schema(implementation = ErrorResponseDTO.class))),
             @ApiResponse(responseCode = "404", description = "HTTP Status NOT_FOUND", content = @Content(schema = @Schema(implementation = ErrorResponseDTO.class))),
             @ApiResponse(responseCode = "500", description = "HTTP Status INTERNAL_SERVER_ERROR", content = @Content(schema = @Schema(implementation = ErrorResponseDTO.class))),
     })
@@ -98,14 +98,34 @@ public class CardsRestController {
     @ApiResponses({
             @ApiResponse(responseCode = "200", description = "HTTP Status OK", content = @Content(schema = @Schema(implementation = ResponseDTO.class))),
             @ApiResponse(responseCode = "404", description = "HTTP Status NOT_FOUND", content = @Content(schema = @Schema(implementation = ErrorResponseDTO.class))),
+            @ApiResponse(responseCode = "401", description = "HTTP Status UNAUTHORIZED", content = @Content(schema = @Schema(implementation = ErrorResponseDTO.class))),
             @ApiResponse(responseCode = "400", description = "HTTP Status BAD_REQUEST", content = @Content(schema = @Schema(implementation = ErrorResponseDTO.class))),
             @ApiResponse(responseCode = "500", description = "HTTP Status INTERNAL_SERVER_ERROR", content = @Content(schema = @Schema(implementation = ErrorResponseDTO.class))),
     })
     @DeleteMapping("")
-    public ResponseEntity<ResponseDTO> deleteCard(@RequestParam @ValidPhoneNumber String mobileNumber) {
-        cardService.deleteCard(mobileNumber);
+    public ResponseEntity<ResponseDTO> deleteCard(@RequestBody DeleteRequestDTO deleteRequestDTO) {
+        cardService.deleteCard(deleteRequestDTO);
         return ResponseEntity.status(HttpStatus.OK)
                 .body(new ResponseDTO(HttpStatus.OK, "Card deleted successfully"));
+    }
+
+    @Operation(summary = "Transaction REST API", description = "REST API to make a transaction for a customer's card")
+    @ApiResponses({
+            @ApiResponse(responseCode = "201", description = "HTTP Status CREATED", content = @Content(schema = @Schema(implementation = ResponseDTO.class))),
+            @ApiResponse(responseCode = "400", description = "HTTP Status BAD_REQUEST", content = @Content(schema = @Schema(implementation = ErrorResponseDTO.class))),
+            @ApiResponse(responseCode = "401", description = "HTTP Status UNAUTHORIZED", content = @Content(schema = @Schema(implementation = ErrorResponseDTO.class))),
+            @ApiResponse(responseCode = "404", description = "HTTP Status NOT_FOUND", content = @Content(schema = @Schema(implementation = ErrorResponseDTO.class))),
+            @ApiResponse(responseCode = "500", description = "HTTP Status INTERNAL_SERVER_ERROR", content = @Content(schema = @Schema(implementation = ErrorResponseDTO.class))),
+    })
+    @PostMapping("/{cardNumber}/transaction")
+    public ResponseEntity<ResponseDTO> makeTransaction(@RequestBody @Valid TransactionDTO transactionDTO,
+                                                       @PathVariable @CreditCardNumber(ignoreNonDigitCharacters = true, message = "Invalid card number")
+                                                       String cardNumber) {
+
+        cardService.makeTransaction(cardNumber, transactionDTO);
+
+        return ResponseEntity.status(HttpStatus.CREATED)
+                .body(new ResponseDTO(HttpStatus.CREATED, "Transaction made successfully"));
     }
 
 

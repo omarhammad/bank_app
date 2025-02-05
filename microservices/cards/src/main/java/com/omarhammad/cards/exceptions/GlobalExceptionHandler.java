@@ -98,6 +98,18 @@ public class GlobalExceptionHandler {
                 ));
     }
 
+    @ExceptionHandler(InvalidTransactionTypeException.class)
+    public ResponseEntity<ErrorResponseDTO> handleInvalidTransactionTypeException(InvalidTransactionTypeException exception,
+                                                                           WebRequest webRequest) {
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                .body(new ErrorResponseDTO(
+                        webRequest.getDescription(false),
+                        HttpStatus.BAD_REQUEST,
+                        exception.getMessage(),
+                        LocalDateTime.now()
+                ));
+    }
+
 
     @ExceptionHandler(InvalidPinCodeException.class)
     public ResponseEntity<ErrorResponseDTO> handleInvalidPinCode(InvalidPinCodeException exception,
@@ -111,6 +123,29 @@ public class GlobalExceptionHandler {
                 ));
     }
 
+    @ExceptionHandler(CardNumberConflictException.class)
+    public ResponseEntity<ErrorResponseDTO> handleCardNumberConflictException(CardNumberConflictException exception,
+                                                                              WebRequest webRequest) {
+        return ResponseEntity.status(HttpStatus.CONFLICT)
+                .body(new ErrorResponseDTO(
+                        webRequest.getDescription(false),
+                        HttpStatus.CONFLICT,
+                        exception.getMessage(),
+                        LocalDateTime.now()
+                ));
+    }
+
+    @ExceptionHandler(InvalidWithdrawTransaction.class)
+    public ResponseEntity<ErrorResponseDTO> handleInvalidWithdrawTransaction(InvalidWithdrawTransaction exception,
+                                                                              WebRequest webRequest) {
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                .body(new ErrorResponseDTO(
+                        webRequest.getDescription(false),
+                        HttpStatus.BAD_REQUEST,
+                        exception.getMessage(),
+                        LocalDateTime.now()
+                ));
+    }
 
     @ExceptionHandler(Exception.class)
     public ResponseEntity<ErrorResponseDTO> handleGlobalExceptions(Exception exception, WebRequest webRequest) {

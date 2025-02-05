@@ -12,9 +12,6 @@ import org.hibernate.validator.constraints.CreditCardNumber;
 @Schema(name = "Transaction", description = "Schema to hold Transaction information")
 public class TransactionDTO {
 
-    @Schema(description = "The customer credit card", example = "7992-7398-713")
-    @CreditCardNumber(ignoreNonDigitCharacters = true,message = "Invalid card number")
-    private String cardNumber;
 
     @Schema(description = "The card pin code", example = "1234")
     @Size(min = 4, max = 4, message = "Pin code should be 4 digits")

@@ -29,10 +29,14 @@ public class Card extends BaseEntity {
 
     private Long totalLimit;
 
-    private Long availableAmount;
+    private Long balance;
 
     @OneToMany(mappedBy = "card")
     private List<Transaction> transactions;
+
+
+
+
 
 
 

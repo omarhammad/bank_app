@@ -1,22 +1,31 @@
 package com.omarhammad.cards.services.cardServices;
 
 import com.omarhammad.cards.controllers.dto.CardDTO;
+import com.omarhammad.cards.controllers.dto.DeleteRequestDTO;
+import com.omarhammad.cards.controllers.dto.TransactionDTO;
 import com.omarhammad.cards.controllers.dto.UpdateCardDTO;
 import com.omarhammad.cards.domain.Card;
 import com.omarhammad.cards.domain.CardType;
+import com.omarhammad.cards.domain.Transaction;
+import com.omarhammad.cards.domain.TransactionType;
 import com.omarhammad.cards.exceptions.CardAlreadyExistsException;
+import com.omarhammad.cards.exceptions.CardNumberConflictException;
 import com.omarhammad.cards.exceptions.InvalidPinCodeException;
+import com.omarhammad.cards.exceptions.InvalidWithdrawTransaction;
 import com.omarhammad.cards.repositories.cardRepos.CardsRepository;
+import com.omarhammad.cards.repositories.transactioRepos.TransactionRepository;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.AllArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @AllArgsConstructor
 @Service
 public class CardService implements ICardService {
 
+    private final TransactionRepository transactionRepository;
     private CardsRepository cardsRepository;
     private ModelMapper modelMapper;
     private PasswordEncoder passwordEncoder;
@@ -74,14 +83,59 @@ public class CardService implements ICardService {
     }
 
     @Override
-    public void deleteCard(String mobileNumber) {
+    public void deleteCard(DeleteRequestDTO deleteRequestDTO) {
 
-        Card card = cardsRepository.findCardByMobileNumber(mobileNumber)
-                .orElseThrow(() -> new EntityNotFoundException("Card with this mobile number %s not found".formatted(mobileNumber)));
+        Card card = cardsRepository.findCardByCardNumber(deleteRequestDTO.getCardNumber())
+                .orElseThrow(() -> new EntityNotFoundException("Card with this card number %s not found".formatted(deleteRequestDTO.getCardNumber())));
+
+        if (!verifyPinCode(card.getPinCode(), deleteRequestDTO.getPinCode()))
+            throw new InvalidPinCodeException("Invalid pin code! try again");
 
         cardsRepository.delete(card);
 
     }
+
+    @Override
+    @Transactional
+    public void makeTransaction(String cardNumber, TransactionDTO transactionDTO) {
+
+        Card card = cardsRepository.findCardByCardNumber(cardNumber)
+                .orElseThrow(() -> new EntityNotFoundException("Card with this card number %s not found".formatted(cardNumber)));
+
+        if (!verifyPinCode(card.getPinCode(), transactionDTO.getPinCode()))
+            throw new InvalidPinCodeException("Invalid pin code! try again");
+
+
+        Transaction transaction = new Transaction();
+        transaction.setTransactionType(TransactionType.fromString(transactionDTO.getTransactionType()));
+        transaction.setAmount(transactionDTO.getTransactionAmount());
+        transaction.setCard(card);
+
+        transactionProcess(transaction, card);
+
+        transactionRepository.save(transaction);
+
+    }
+
+    private void transactionProcess(Transaction transaction, Card card) {
+
+        Long balance = card.getBalance();
+        if (balance == null) balance = 0L;
+
+        Long transactionAmount = transaction.getAmount();
+
+        switch (transaction.getTransactionType()) {
+            case TransactionType.DEPOSIT -> card.setBalance(balance + transactionAmount);
+            case TransactionType.WITHDRAW -> {
+                if (balance < transactionAmount)
+                    throw new InvalidWithdrawTransaction("Your Balance is not sufficient");
+
+                card.setBalance(balance - transactionAmount);
+            }
+        }
+
+    }
+
 
     private boolean verifyPinCode(String encodedPinCOde, String pinCode) {
 
