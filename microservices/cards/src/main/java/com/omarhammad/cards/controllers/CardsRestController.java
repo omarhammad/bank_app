@@ -35,9 +35,12 @@ public class CardsRestController {
      *    5) Withdraw Money - DONE
      *    6) Deposit Money - DONE
      *    7) Change PinCode - DONE
-     *    8) Request Current PinCode with email
-     *    9) Un/Block Card
-     *    10) Transactions History
+     * TODO LATER:
+     *    1) Request Current PinCode with email - WHILE DOING THE MICRO SERVICES
+     *    2) Un/Block Card - WHILE DOING THE MICRO SERVICES
+     *    3) Transactions History - WHILE DOING THE MICRO SERVICES
+     *    4) Make another Transaction MicroServices when needed contains (DEPOSIT,WITHDRAW AND HISTORY)
+     *       for Depth in learning.
      * */
 
     private ICardService cardService;
