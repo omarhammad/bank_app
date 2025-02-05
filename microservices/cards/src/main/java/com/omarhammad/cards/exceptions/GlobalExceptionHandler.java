@@ -123,6 +123,18 @@ public class GlobalExceptionHandler {
                 ));
     }
 
+    @ExceptionHandler(InvalidOldNewPinCodeMatchException.class)
+    public ResponseEntity<ErrorResponseDTO> handleInvalidOldNewPinCodeMatchException(InvalidOldNewPinCodeMatchException exception,
+                                                                 WebRequest webRequest) {
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                .body(new ErrorResponseDTO(
+                        webRequest.getDescription(false),
+                        HttpStatus.BAD_REQUEST,
+                        exception.getMessage(),
+                        LocalDateTime.now()
+                ));
+    }
+
     @ExceptionHandler(CardNumberConflictException.class)
     public ResponseEntity<ErrorResponseDTO> handleCardNumberConflictException(CardNumberConflictException exception,
                                                                               WebRequest webRequest) {

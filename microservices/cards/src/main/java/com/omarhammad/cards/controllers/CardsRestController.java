@@ -1,7 +1,6 @@
 package com.omarhammad.cards.controllers;
 
 import com.omarhammad.cards.controllers.dto.*;
-import com.omarhammad.cards.domain.Transaction;
 import com.omarhammad.cards.services.cardServices.ICardService;
 import com.omarhammad.cards.utils.phoneNumberValidator.ValidPhoneNumber;
 import io.swagger.v3.oas.annotations.Operation;
@@ -19,8 +18,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
-import java.awt.*;
-
 @RestController
 @AllArgsConstructor
 @Validated
@@ -37,9 +34,9 @@ public class CardsRestController {
      *    4) Delete Card - DONE
      *    5) Withdraw Money - DONE
      *    6) Deposit Money - DONE
-     *    7) Change PinCode
+     *    7) Change PinCode - DONE
      *    8) Request Current PinCode with email
-     *    9) Block Card
+     *    9) Un/Block Card
      *    10) Transactions History
      * */
 
@@ -91,6 +88,26 @@ public class CardsRestController {
         cardService.updateCard(updateCardDTO);
         return ResponseEntity.status(HttpStatus.OK)
                 .body(new ResponseDTO(HttpStatus.OK, "Card Updated Successfully"));
+    }
+
+
+    @Operation(summary = "Change Pin code REST API", description = "REST API to change the pin code")
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", description = "HTTP Status OK", content = @Content(schema = @Schema(implementation = ResponseDTO.class))),
+            @ApiResponse(responseCode = "400", description = "HTTP Status BAD_REQUEST", content = @Content(schema = @Schema(implementation = ErrorResponseDTO.class))),
+            @ApiResponse(responseCode = "401", description = "HTTP Status UNAUTHORIZED", content = @Content(schema = @Schema(implementation = ErrorResponseDTO.class))),
+            @ApiResponse(responseCode = "404", description = "HTTP Status NOT_FOUND", content = @Content(schema = @Schema(implementation = ErrorResponseDTO.class))),
+            @ApiResponse(responseCode = "409", description = "HTTP Status CONFLICT", content = @Content(schema = @Schema(implementation = ErrorResponseDTO.class))),
+            @ApiResponse(responseCode = "500", description = "HTTP Status INTERNAL_SERVER_ERROR", content = @Content(schema = @Schema(implementation = ErrorResponseDTO.class))),
+    })
+    @PutMapping("/{cardNumber}/pincode")
+    public ResponseEntity<ResponseDTO> changePinCode(@RequestBody @Valid PinCodeChangeDTO pinCodeChangeDTO, @PathVariable @CreditCardNumber(ignoreNonDigitCharacters = true, message = "Invalid card number")
+    String cardNumber) {
+
+        cardService.changePinCode(cardNumber,pinCodeChangeDTO);
+
+        return ResponseEntity.status(HttpStatus.OK)
+                .body(new ResponseDTO(HttpStatus.OK, "Pin code changed successfully"));
     }
 
 

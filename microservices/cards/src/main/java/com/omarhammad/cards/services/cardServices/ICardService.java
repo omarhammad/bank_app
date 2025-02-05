@@ -1,10 +1,8 @@
 package com.omarhammad.cards.services.cardServices;
 
-import com.omarhammad.cards.controllers.dto.CardDTO;
-import com.omarhammad.cards.controllers.dto.DeleteRequestDTO;
-import com.omarhammad.cards.controllers.dto.TransactionDTO;
-import com.omarhammad.cards.controllers.dto.UpdateCardDTO;
+import com.omarhammad.cards.controllers.dto.*;
 import jakarta.validation.Valid;
+import org.hibernate.validator.constraints.CreditCardNumber;
 import org.springframework.stereotype.Repository;
 
 public interface ICardService {
@@ -15,7 +13,11 @@ public interface ICardService {
 
     void updateCard(UpdateCardDTO cardDTO);
 
+    void changePinCode(String cardNumber, @Valid PinCodeChangeDTO pinCodeChangeDTO);
+
     void deleteCard(DeleteRequestDTO deleteRequestDTO);
 
+
     void makeTransaction(String cardNumber, TransactionDTO transactionDTO);
+
 }

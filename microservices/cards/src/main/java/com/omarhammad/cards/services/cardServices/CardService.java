@@ -1,17 +1,11 @@
 package com.omarhammad.cards.services.cardServices;
 
-import com.omarhammad.cards.controllers.dto.CardDTO;
-import com.omarhammad.cards.controllers.dto.DeleteRequestDTO;
-import com.omarhammad.cards.controllers.dto.TransactionDTO;
-import com.omarhammad.cards.controllers.dto.UpdateCardDTO;
+import com.omarhammad.cards.controllers.dto.*;
 import com.omarhammad.cards.domain.Card;
 import com.omarhammad.cards.domain.CardType;
 import com.omarhammad.cards.domain.Transaction;
 import com.omarhammad.cards.domain.TransactionType;
-import com.omarhammad.cards.exceptions.CardAlreadyExistsException;
-import com.omarhammad.cards.exceptions.CardNumberConflictException;
-import com.omarhammad.cards.exceptions.InvalidPinCodeException;
-import com.omarhammad.cards.exceptions.InvalidWithdrawTransaction;
+import com.omarhammad.cards.exceptions.*;
 import com.omarhammad.cards.repositories.cardRepos.CardsRepository;
 import com.omarhammad.cards.repositories.transactioRepos.TransactionRepository;
 import jakarta.persistence.EntityNotFoundException;
@@ -83,6 +77,29 @@ public class CardService implements ICardService {
     }
 
     @Override
+    public void changePinCode(String cardNumber, PinCodeChangeDTO pinCodeChangeDTO) {
+
+        if (!cardNumber.equals(pinCodeChangeDTO.getCardNumber()))
+            throw new CardNumberConflictException("Path and body card number should match");
+
+        Card card = cardsRepository.findCardByCardNumber(pinCodeChangeDTO.getCardNumber())
+                .orElseThrow(() -> new EntityNotFoundException("Card with this card number %s not found".formatted(pinCodeChangeDTO.getCardNumber())));
+
+
+        if (!verifyPinCode(card.getPinCode(), pinCodeChangeDTO.getOldPinCode()))
+            throw new InvalidPinCodeException("Invalid pin code! try again");
+
+        if (pinCodeChangeDTO.getOldPinCode().equals(pinCodeChangeDTO.getNewPinCode()))
+            throw new InvalidOldNewPinCodeMatchException("New Pin code should be different than old one");
+
+
+        String encodedNewPinCode = passwordEncoder.encode(pinCodeChangeDTO.getNewPinCode());
+        card.setPinCode(encodedNewPinCode);
+        cardsRepository.save(card);
+    }
+
+
+    @Override
     public void deleteCard(DeleteRequestDTO deleteRequestDTO) {
 
         Card card = cardsRepository.findCardByCardNumber(deleteRequestDTO.getCardNumber())
@@ -116,6 +133,7 @@ public class CardService implements ICardService {
         transactionRepository.save(transaction);
 
     }
+
 
     private void transactionProcess(Transaction transaction, Card card) {
 
