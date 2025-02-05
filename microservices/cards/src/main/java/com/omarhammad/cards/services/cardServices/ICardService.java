@@ -12,4 +12,6 @@ public interface ICardService {
     void createCard(CardDTO cardDTO);
 
     void updateCard(UpdateCardDTO cardDTO);
+
+    void deleteCard(String mobileNumber);
 }

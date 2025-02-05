@@ -33,9 +33,9 @@ public class CardsRestController {
     /*
      * TODO:
      *    1) Get Card Info - DONE
-     *    2) Create Card
-     *    3) Update Card
-     *    4) Delete Card
+     *    2) Create Card - DONE
+     *    3) Update Card - DONE
+     *    4) Delete Card - DONE
      *    5) Withdraw Money
      *    6) Deposit Money
      *    7) Change PinCode
@@ -80,10 +80,10 @@ public class CardsRestController {
 
     @Operation(summary = "Update Card REST API", description = "REST API to update the card information")
     @ApiResponses({
-            @ApiResponse(responseCode = "200",description = "HTTP Status OK",content = @Content(schema = @Schema(implementation = ResponseDTO.class))),
-            @ApiResponse(responseCode = "400",description = "HTTP Status BAD_REQUEST",content = @Content(schema = @Schema(implementation = ErrorResponseDTO.class))),
-            @ApiResponse(responseCode = "404",description = "HTTP Status NOT_FOUND",content = @Content(schema = @Schema(implementation = ErrorResponseDTO.class))),
-            @ApiResponse(responseCode = "500",description = "HTTP Status INTERNAL_SERVER_ERROR",content = @Content(schema = @Schema(implementation = ErrorResponseDTO.class))),
+            @ApiResponse(responseCode = "200", description = "HTTP Status OK", content = @Content(schema = @Schema(implementation = ResponseDTO.class))),
+            @ApiResponse(responseCode = "400", description = "HTTP Status BAD_REQUEST", content = @Content(schema = @Schema(implementation = ErrorResponseDTO.class))),
+            @ApiResponse(responseCode = "404", description = "HTTP Status NOT_FOUND", content = @Content(schema = @Schema(implementation = ErrorResponseDTO.class))),
+            @ApiResponse(responseCode = "500", description = "HTTP Status INTERNAL_SERVER_ERROR", content = @Content(schema = @Schema(implementation = ErrorResponseDTO.class))),
     })
     @PutMapping
     public ResponseEntity<ResponseDTO> updateCard(@RequestBody @Valid UpdateCardDTO updateCardDTO) {
@@ -91,6 +91,21 @@ public class CardsRestController {
         cardService.updateCard(updateCardDTO);
         return ResponseEntity.status(HttpStatus.OK)
                 .body(new ResponseDTO(HttpStatus.OK, "Card Updated Successfully"));
+    }
+
+
+    @Operation(summary = "Delete Card REST API", description = "REST API to delete a card")
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", description = "HTTP Status OK", content = @Content(schema = @Schema(implementation = ResponseDTO.class))),
+            @ApiResponse(responseCode = "404", description = "HTTP Status NOT_FOUND", content = @Content(schema = @Schema(implementation = ErrorResponseDTO.class))),
+            @ApiResponse(responseCode = "400", description = "HTTP Status BAD_REQUEST", content = @Content(schema = @Schema(implementation = ErrorResponseDTO.class))),
+            @ApiResponse(responseCode = "500", description = "HTTP Status INTERNAL_SERVER_ERROR", content = @Content(schema = @Schema(implementation = ErrorResponseDTO.class))),
+    })
+    @DeleteMapping("")
+    public ResponseEntity<ResponseDTO> deleteCard(@RequestParam @ValidPhoneNumber String mobileNumber) {
+        cardService.deleteCard(mobileNumber);
+        return ResponseEntity.status(HttpStatus.OK)
+                .body(new ResponseDTO(HttpStatus.OK, "Card deleted successfully"));
     }
 
 

@@ -62,7 +62,7 @@ public class CardService implements ICardService {
                 .orElseThrow(() -> new EntityNotFoundException("Card with this card number %s not found".formatted(updateCardDTO.getCardNumber())));
 
 
-        if(!verifyPinCode(card.getPinCode(),updateCardDTO.getPinCode()))
+        if (!verifyPinCode(card.getPinCode(), updateCardDTO.getPinCode()))
             throw new InvalidPinCodeException("Invalid Pin Code! try again");
 
         card.setCardType(CardType.fromString(updateCardDTO.getCardType()));
@@ -73,6 +73,15 @@ public class CardService implements ICardService {
 
     }
 
+    @Override
+    public void deleteCard(String mobileNumber) {
+
+        Card card = cardsRepository.findCardByMobileNumber(mobileNumber)
+                .orElseThrow(() -> new EntityNotFoundException("Card with this mobile number %s not found".formatted(mobileNumber)));
+
+        cardsRepository.delete(card);
+
+    }
 
     private boolean verifyPinCode(String encodedPinCOde, String pinCode) {
 
