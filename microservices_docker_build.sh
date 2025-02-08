@@ -10,6 +10,12 @@ declare -A MICROSERVICES=(
 DOCKER_USER="omarhammad97"
 PROJECT_ROOT=$(pwd)  # Get the root directory of the project
 
+# Step 1: Build All JARs at Once from the Root
+echo "🔨 Running Gradle build for all microservices..."
+cd "$PROJECT_ROOT" || exit
+./gradlew clean build -x test || { echo "❌ Gradle build failed! Exiting..."; exit 1; }
+echo "✅ All microservices JARs built successfully!"
+
 # Function to get the latest version tag from Docker
 get_latest_version() {
     IMAGE=$1
@@ -24,7 +30,7 @@ get_latest_version() {
     fi
 }
 
-# Loop through each microservice and build + tag
+# Step 2: Loop through each microservice and build + tag Docker images
 for SERVICE in "${!MICROSERVICES[@]}"; do
     REPO_NAME="${MICROSERVICES[$SERVICE]}"  # Get the full repo name
     SERVICE_DIR="$PROJECT_ROOT/microservices/$SERVICE"
@@ -37,22 +43,26 @@ for SERVICE in "${!MICROSERVICES[@]}"; do
         exit 1
     fi
 
-    cd "$SERVICE_DIR" || exit
+    # Ensure JAR file exists before proceeding
+    JAR_FILE=$(find "$SERVICE_DIR/build/libs" -name "*.jar" | head -n 1)
+    if [[ -z "$JAR_FILE" ]]; then
+        echo "❌ Error: No JAR file found for $SERVICE! Build might have failed."
+        exit 1
+    fi
+
+    echo "✅ JAR found: $JAR_FILE"
 
     # Get the next version
     NEW_VERSION=$(get_latest_version "$REPO_NAME")
 
     # Build the Docker image
-    docker build -t "$DOCKER_USER/$REPO_NAME:$NEW_VERSION" -t "$DOCKER_USER/$REPO_NAME:latest" .
+    docker build -t "$DOCKER_USER/$REPO_NAME:$NEW_VERSION" -t "$DOCKER_USER/$REPO_NAME:latest" "$SERVICE_DIR" || { echo "❌ Docker build failed for $SERVICE"; exit 1; }
 
     # Push both the new version and latest tag
     docker push "$DOCKER_USER/$REPO_NAME:$NEW_VERSION"
     docker push "$DOCKER_USER/$REPO_NAME:latest"
 
     echo "✅ $SERVICE built and tagged as $NEW_VERSION and latest in repo $REPO_NAME"
-
-    # Return to project root
-    cd "$PROJECT_ROOT" || exit
 done
 
 echo "🎯 All microservices have been built and pushed successfully!"
