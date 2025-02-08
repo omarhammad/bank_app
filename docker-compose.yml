@@ -1,4 +1,6 @@
 version: '3.8'
+
+# docker-compose pull && docker-compose up -d --force-recreate
 services:
 
   accounts_microservice:
@@ -7,6 +9,8 @@ services:
     depends_on:
       accounts_db:
         condition: service_healthy
+    ports:
+      - '8000:80'
     environment:
       DB_HOST: accounts_db
       DB_PORT: 5432
@@ -15,12 +19,15 @@ services:
       DB_PASSWORD: accounts_prod
 
 
+
   cards_microservice:
     image: omarhammad97/cards_microservice:latest
     restart: always
     depends_on:
       cards_db:
         condition: service_healthy
+    ports:
+      - '8001:80'
     environment:
       DB_HOST: cards_db
       DB_PORT: 5432
@@ -36,6 +43,8 @@ services:
     depends_on:
       loans_db:
         condition: service_healthy
+    ports:
+      - '8002:80'
     environment:
       DB_HOST: loans_db
       DB_PORT: 5432
