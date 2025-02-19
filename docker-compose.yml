@@ -12,6 +12,7 @@ services:
     ports:
       - '8000:80'
     environment:
+      ACTIVE_PROFILE: 'prod'
       DB_HOST: accounts_db
       DB_PORT: 5432
       DB_NAME: accounts_db
@@ -29,6 +30,7 @@ services:
     ports:
       - '8001:80'
     environment:
+      ACTIVE_PROFILE: 'prod'
       DB_HOST: cards_db
       DB_PORT: 5432
       DB_NAME: cards_db
@@ -46,6 +48,7 @@ services:
     ports:
       - '8002:80'
     environment:
+      ACTIVE_PROFILE: 'prod'
       DB_HOST: loans_db
       DB_PORT: 5432
       DB_NAME: loans_db
