@@ -26,7 +26,7 @@ import org.springframework.web.bind.annotation.*;
 @AllArgsConstructor
 @Validated
 @Tag(name = "Loans", description = "Loans Management APIs")
-@RequestMapping(value = "/api/loans", produces = {MediaType.APPLICATION_JSON_VALUE})
+@RequestMapping(value = "/api/v1/loans", produces = {MediaType.APPLICATION_JSON_VALUE})
 public class LoansRestController {
 
 

@@ -22,7 +22,7 @@ import org.springframework.web.bind.annotation.*;
 @AllArgsConstructor
 @Validated
 @Tag(name = "Cards", description = "Cards Management APIs")
-@RequestMapping(value = "/api/cards", produces = {MediaType.APPLICATION_JSON_VALUE})
+@RequestMapping(value = "/api/v1/cards", produces = {MediaType.APPLICATION_JSON_VALUE})
 public class CardsRestController {
 
 
