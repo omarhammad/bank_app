@@ -26,6 +26,9 @@ repositories {
     mavenCentral()
 }
 
+extra["springCloudVersion"] = "2024.0.0"
+
+
 dependencies {
     implementation("org.springframework.boot:spring-boot-starter-actuator")
     implementation("org.springframework.boot:spring-boot-starter-data-jpa")
@@ -34,6 +37,8 @@ dependencies {
     implementation("com.googlecode.libphonenumber:libphonenumber:8.12.14")
     implementation("org.springdoc:springdoc-openapi-starter-webmvc-ui:2.8.3")
     implementation("org.modelmapper:modelmapper:3.1.0")
+    implementation("org.springframework.cloud:spring-cloud-starter-config")
+
     compileOnly("org.projectlombok:lombok")
     developmentOnly("org.springframework.boot:spring-boot-devtools")
     runtimeOnly("org.postgresql:postgresql")
@@ -41,6 +46,13 @@ dependencies {
     testImplementation("org.springframework.boot:spring-boot-starter-test")
     testRuntimeOnly("org.junit.platform:junit-platform-launcher")
 }
+
+dependencyManagement {
+    imports {
+        mavenBom("org.springframework.cloud:spring-cloud-dependencies:${property("springCloudVersion")}")
+    }
+}
+
 
 tasks.withType<Test> {
     useJUnitPlatform()
