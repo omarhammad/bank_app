@@ -11,7 +11,9 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
+import org.hibernate.cfg.Environment;
 import org.hibernate.validator.constraints.CreditCardNumber;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -44,7 +46,6 @@ public class CardsRestController {
      * */
 
     private ICardService cardService;
-
 
     @Operation(summary = "Fetch Card REST API", description = "REST API to fetch a customer card")
     @ApiResponses({

@@ -1,5 +1,6 @@
 package com.omarhammad.accounts.controllers;
 
+import com.omarhammad.accounts.controllers.dtos.AccountsContactInfoDTO;
 import com.omarhammad.accounts.controllers.dtos.ErrorResponseDTO;
 import com.omarhammad.accounts.controllers.dtos.ResponseDTO;
 import com.omarhammad.accounts.controllers.dtos.customers.CustomerDTO;
@@ -11,21 +12,38 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
-import lombok.AllArgsConstructor;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.core.env.Environment;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Map;
+import java.util.Objects;
+
 @RestController
 @RequestMapping(value = "/api/v1/accounts", produces = {MediaType.APPLICATION_JSON_VALUE})
 @Tag(name = "Accounts", description = "Accounts Management APIs")
-@AllArgsConstructor
 @Validated
 public class AccountRestController {
 
     private final IAccountsService accountsService;
+
+    @Value("${build.version}")
+    private String buildVersion;
+
+    private final Environment environment;
+
+    private final AccountsContactInfoDTO accountsContactInfoDTO;
+
+
+    public AccountRestController(IAccountsService accountsService, Environment environment, AccountsContactInfoDTO accountsContactInfoDTO) {
+        this.accountsService = accountsService;
+        this.environment = environment;
+        this.accountsContactInfoDTO = accountsContactInfoDTO;
+    }
 
     @Operation(
             summary = "Create New Account",
@@ -99,6 +117,51 @@ public class AccountRestController {
 
         return ResponseEntity.ok().body(new ResponseDTO(HttpStatus.OK.value(), "Account deleted successfully"));
 
+    }
+
+
+    @Operation(
+            summary = "Get Build information using @Value",
+            description = "Get build information details that is installed into accounts microservice"
+    )
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", description = "HTTP Status OK"),
+            @ApiResponse(responseCode = "500", description = "HTTP Status INTERNAL_SERVER_ERROR",
+                    content = @Content(schema = @Schema(implementation = ErrorResponseDTO.class)))
+    })
+    @GetMapping("/build-info")
+    public ResponseEntity<Map<String, String>> getBuildInfo() {
+        return ResponseEntity.status(HttpStatus.OK).body(Map.of("BUILD_VERSION", Objects.requireNonNull(buildVersion)));
+    }
+
+
+    @Operation(
+            summary = "Get Java version using Environment",
+            description = "Get Java versions details that is installed into accounts microservice"
+    )
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", description = "HTTP Status OK"),
+            @ApiResponse(responseCode = "500", description = "HTTP Status INTERNAL_SERVER_ERROR",
+                    content = @Content(schema = @Schema(implementation = ErrorResponseDTO.class)))
+    })
+    @GetMapping(value = "/java-version")
+    public ResponseEntity<Map<String, String>> getJavaVersion() {
+        return ResponseEntity.status(HttpStatus.OK).body(Map.of("JAVA_HOME", Objects.requireNonNull(environment.getProperty("JAVA_HOME"))));
+    }
+
+
+    @Operation(
+            summary = "Get Contact Info using @ConfigurationProperties",
+            description = "Contact Info details that can be reached out in case of any issues"
+    )
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", description = "HTTP Status OK"),
+            @ApiResponse(responseCode = "500", description = "HTTP Status INTERNAL_SERVER_ERROR",
+                    content = @Content(schema = @Schema(implementation = ErrorResponseDTO.class)))
+    })
+    @GetMapping(value = "/contact-info")
+    public ResponseEntity<AccountsContactInfoDTO> getContactInfo() {
+        return ResponseEntity.status(HttpStatus.OK).body(accountsContactInfoDTO);
     }
 
 
