@@ -38,7 +38,6 @@ public class AccountRestController {
 
     private final AccountsContactInfoDTO accountsContactInfoDTO;
 
-
     public AccountRestController(IAccountsService accountsService, Environment environment, AccountsContactInfoDTO accountsContactInfoDTO) {
         this.accountsService = accountsService;
         this.environment = environment;

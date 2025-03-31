@@ -1,9 +1,6 @@
 package com.omarhammad.loans.controllers;
 
-import com.omarhammad.loans.controllers.dtos.ErrorResponseDTO;
-import com.omarhammad.loans.controllers.dtos.LoanDTO;
-import com.omarhammad.loans.controllers.dtos.RepaymentDTO;
-import com.omarhammad.loans.controllers.dtos.ResponseDTO;
+import com.omarhammad.loans.controllers.dtos.*;
 import com.omarhammad.loans.services.loansService.ILoansService;
 import com.omarhammad.loans.utils.phoneNumberValidator.ValidPhoneNumber;
 import io.swagger.v3.oas.annotations.Operation;
@@ -32,6 +29,7 @@ public class LoansRestController {
 
     private final ILoansService loansService;
     private final Logger logger = LoggerFactory.getLogger(LoansRestController.class);
+    private final LoansContactInfoDTO loansContactInfoDTO;
 
     @Operation(summary = "Fetch Loan REST API", description = "REST API  to fetch loan for a customer")
     @ApiResponses({
@@ -103,5 +101,20 @@ public class LoansRestController {
     public ResponseEntity<ResponseDTO> deleteLoan(@RequestParam @ValidPhoneNumber String mobileNumber) {
         loansService.deleteLoan(mobileNumber);
         return ResponseEntity.ok(new ResponseDTO(HttpStatus.OK, "Loan deleted successfully"));
+    }
+
+
+    @Operation(
+            summary = "Get Contact Info using @ConfigurationProperties",
+            description = "Contact Info details that can be reached out in case of any issues"
+    )
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", description = "HTTP Status OK"),
+            @ApiResponse(responseCode = "500", description = "HTTP Status INTERNAL_SERVER_ERROR",
+                    content = @Content(schema = @Schema(implementation = ErrorResponseDTO.class)))
+    })
+    @GetMapping(value = "/contact-info")
+    public ResponseEntity<LoansContactInfoDTO> getContactInfo() {
+        return ResponseEntity.status(HttpStatus.OK).body(loansContactInfoDTO);
     }
 }

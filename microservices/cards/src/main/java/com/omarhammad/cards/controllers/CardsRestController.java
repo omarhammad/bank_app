@@ -11,9 +11,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
-import org.hibernate.cfg.Environment;
 import org.hibernate.validator.constraints.CreditCardNumber;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -46,6 +44,7 @@ public class CardsRestController {
      * */
 
     private ICardService cardService;
+    private CardsContactInfoDTO cardsContactInfoDTO;
 
     @Operation(summary = "Fetch Card REST API", description = "REST API to fetch a customer card")
     @ApiResponses({
@@ -150,6 +149,21 @@ public class CardsRestController {
 
         return ResponseEntity.status(HttpStatus.CREATED)
                 .body(new ResponseDTO(HttpStatus.CREATED, "Transaction made successfully"));
+    }
+
+
+    @Operation(
+            summary = "Get Contact Info using @ConfigurationProperties",
+            description = "Contact Info details that can be reached out in case of any issues"
+    )
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", description = "HTTP Status OK"),
+            @ApiResponse(responseCode = "500", description = "HTTP Status INTERNAL_SERVER_ERROR",
+                    content = @Content(schema = @Schema(implementation = ErrorResponseDTO.class)))
+    })
+    @GetMapping(value = "/contact-info")
+    public ResponseEntity<CardsContactInfoDTO> getContactInfo() {
+        return ResponseEntity.status(HttpStatus.OK).body(cardsContactInfoDTO);
     }
 
 
