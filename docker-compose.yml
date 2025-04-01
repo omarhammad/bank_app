@@ -1,6 +1,9 @@
 version: '3.8'
 
+#./hookdeck login --cli-key 455y71q47egy4avxg9c08052wxu2akrd7pkoguzqbc7c26a31d
+# ./hookdeck listen 8071 source --cli-path /monitor
 # docker-compose pull && docker-compose up -d --force-recreate
+
 services:
 
   accounts_microservice:
@@ -9,6 +12,10 @@ services:
     depends_on:
       accounts_db:
         condition: service_healthy
+      rabbitmq:
+        condition: service_healthy
+      configserver:
+        condition: service_started
     ports:
       - '8000:80'
     environment:
@@ -18,6 +25,13 @@ services:
       DB_NAME: accounts_db
       DB_USERNAME: accounts_prod
       DB_PASSWORD: accounts_prod
+      CONFIG_SERVER_HOST: configserver
+      CONFIG_SERVER_PORT: "8071"
+      RABBITMQ_HOST: rabbitmq
+      RABBITMQ_PORT: "5672"
+      RABBITMQ_USERNAME: guest
+      RABBITMQ_PASSWORD: guest
+
 
 
 
@@ -27,6 +41,10 @@ services:
     depends_on:
       cards_db:
         condition: service_healthy
+      rabbitmq:
+        condition: service_healthy
+      configserver:
+        condition: service_started
     ports:
       - '8001:80'
     environment:
@@ -36,6 +54,12 @@ services:
       DB_NAME: cards_db
       DB_USERNAME: cards_prod
       DB_PASSWORD: cards_prod
+      CONFIG_SERVER_HOST: configserver
+      CONFIG_SERVER_PORT: "8071"
+      RABBITMQ_HOST: rabbitmq
+      RABBITMQ_PORT: "5672"
+      RABBITMQ_USERNAME: guest
+      RABBITMQ_PASSWORD: guest
 
 
 
@@ -45,6 +69,10 @@ services:
     depends_on:
       loans_db:
         condition: service_healthy
+      rabbitmq:
+        condition: service_healthy
+      configserver:
+        condition: service_started
     ports:
       - '8002:80'
     environment:
@@ -54,6 +82,12 @@ services:
       DB_NAME: loans_db
       DB_USERNAME: loans_prod
       DB_PASSWORD: loans_prod
+      CONFIG_SERVER_HOST: configserver
+      CONFIG_SERVER_PORT: "8071"
+      RABBITMQ_HOST: rabbitmq
+      RABBITMQ_PORT: "5672"
+      RABBITMQ_USERNAME: guest
+      RABBITMQ_PASSWORD: guest
 
 
   accounts_db:
@@ -100,6 +134,47 @@ services:
       interval: 10s
       retries: 5
       start_period: 5s
+
+
+  configserver:
+    image: omarhammad97/configserver:latest
+    restart: always
+    ports:
+      - '8071:8071'
+    depends_on:
+      rabbitmq:
+        condition: service_healthy
+    environment:
+      CONFIG_REPO: "git@github.com:omarhammad/bank_app_configs.git"
+      BASE_DIR: "/tmp/config-repos"
+      IS_CLONEABLE: "true"
+      ENCRYPT_KEY: "23fDssfewewSDS3sfefdsda"
+      RABBITMQ_HOST: rabbitmq
+      RABBITMQ_PORT: "5672"
+      RABBITMQ_USERNAME: guest
+      RABBITMQ_PASSWORD: guest
+    volumes:
+      - ~/.ssh:/root/.ssh:ro
+
+
+
+  rabbitmq:
+    image: rabbitmq:3-management
+    container_name: rabbitmq
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+    environment:
+      RABBITMQ_DEFAULT_USER: guest
+      RABBITMQ_DEFAULT_PASS: guest
+    healthcheck:
+      test: [ "CMD", "rabbitmq-diagnostics", "ping" ]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+
+
 
 volumes:
   accounts_db_data:

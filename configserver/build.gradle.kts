@@ -46,7 +46,7 @@ tasks.withType<Test> {
 
 
 // Use project.name to determine the microservice name
-val repoName = project.name + "_microservice"
+val repoName = project.name
 
 // Execute the bash script before the jib task
 tasks.register("incrementTag") {
