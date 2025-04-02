@@ -4,6 +4,7 @@ import com.omarhammad.loans.controllers.dtos.LoanDTO;
 import com.omarhammad.loans.controllers.dtos.RepaymentDTO;
 import com.omarhammad.loans.domain.Loan;
 import com.omarhammad.loans.domain.Repayment;
+import com.omarhammad.loans.exceptions.InvalidRepaymentAmountException;
 import com.omarhammad.loans.exceptions.LoanAlreadyExistsException;
 import com.omarhammad.loans.repositories.loanRepo.LoanRepository;
 import com.omarhammad.loans.repositories.repaymentRepo.RepaymentRepository;
@@ -70,6 +71,10 @@ public class LoansService implements ILoansService {
 
         Loan loan = loanRepository.findLoanByLoanNumber(loanId)
                 .orElseThrow(() -> new EntityNotFoundException("Loan with %s number not found".formatted(loanId)));
+
+        if (repaymentDTO.getAmount() > loan.getOutstandingAmount()){
+            throw new InvalidRepaymentAmountException("Amount should be less than %s".formatted(loan.getOutstandingAmount()));
+        }
 
         Repayment repayment = new Repayment();
         repayment.setAmountPaid(repaymentDTO.getAmount());

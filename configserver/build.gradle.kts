@@ -77,7 +77,7 @@ tasks.named("jib") {
 
 		jib {
 			from {
-				image = "openjdk:22-jdk-slim"
+				image = "openjdk:22-jdk"
 			}
 			to {
 				image = "omarhammad97/${repoName}:$newTag"

@@ -73,6 +73,17 @@ public class GlobalExceptionHandler {
                 ));
     }
 
+
+    @ExceptionHandler(InvalidRepaymentAmountException.class)
+    public ResponseEntity<ErrorResponseDTO> handleInvalidRepaymentAmountException(InvalidRepaymentAmountException exception,WebRequest webRequest){
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ErrorResponseDTO(
+                webRequest.getDescription(false),
+                HttpStatus.BAD_REQUEST,
+                exception.getMessage(),
+                LocalDateTime.now()
+        ));
+    }
+
     @ExceptionHandler(MethodArgumentNotValidException.class)
     public ResponseEntity<ErrorResponseDTO> handleMethodArgumentNotValidException(MethodArgumentNotValidException exception,
                                                                                   WebRequest webRequest) {

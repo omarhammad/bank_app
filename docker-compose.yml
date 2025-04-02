@@ -1,7 +1,7 @@
 version: '3.8'
 
 #./hookdeck login --cli-key 455y71q47egy4avxg9c08052wxu2akrd7pkoguzqbc7c26a31d
-# ./hookdeck listen 8071 source --cli-path /monitor
+# ./hookdeck listen 8072 source --cli-path /monitor
 # docker-compose pull && docker-compose up -d --force-recreate
 
 services:
@@ -15,7 +15,7 @@ services:
       rabbitmq:
         condition: service_healthy
       configserver:
-        condition: service_started
+        condition: service_healthy
     ports:
       - '8000:80'
     environment:
@@ -31,6 +31,8 @@ services:
       RABBITMQ_PORT: "5672"
       RABBITMQ_USERNAME: guest
       RABBITMQ_PASSWORD: guest
+    networks:
+      - bank_app
 
 
 
@@ -44,7 +46,7 @@ services:
       rabbitmq:
         condition: service_healthy
       configserver:
-        condition: service_started
+        condition: service_healthy
     ports:
       - '8001:80'
     environment:
@@ -60,7 +62,8 @@ services:
       RABBITMQ_PORT: "5672"
       RABBITMQ_USERNAME: guest
       RABBITMQ_PASSWORD: guest
-
+    networks:
+      - bank_app
 
 
   loans_microservice:
@@ -72,7 +75,7 @@ services:
       rabbitmq:
         condition: service_healthy
       configserver:
-        condition: service_started
+        condition: service_healthy
     ports:
       - '8002:80'
     environment:
@@ -88,7 +91,8 @@ services:
       RABBITMQ_PORT: "5672"
       RABBITMQ_USERNAME: guest
       RABBITMQ_PASSWORD: guest
-
+    networks:
+      - bank_app
 
   accounts_db:
     image: postgres:15
@@ -104,6 +108,9 @@ services:
       interval: 10s
       retries: 5
       start_period: 5s
+    networks:
+      - bank_app
+
 
   cards_db:
     image: postgres:15
@@ -119,6 +126,9 @@ services:
       interval: 10s
       retries: 5
       start_period: 5s
+    networks:
+      - bank_app
+
 
   loans_db:
     image: postgres:15
@@ -134,13 +144,15 @@ services:
       interval: 10s
       retries: 5
       start_period: 5s
+    networks:
+      - bank_app
 
 
   configserver:
     image: omarhammad97/configserver:latest
     restart: always
     ports:
-      - '8071:8071'
+      - '8072:8071'
     depends_on:
       rabbitmq:
         condition: service_healthy
@@ -155,6 +167,14 @@ services:
       RABBITMQ_PASSWORD: guest
     volumes:
       - ~/.ssh:/root/.ssh:ro
+    healthcheck:
+      test: "curl --fail --silent localhost:8071/actuator/health/readiness | grep UP || exit 1"
+      interval: 10s
+      timeout: 5s
+      retries: 10
+      start_period: 10s
+    networks:
+      - bank_app
 
 
 
@@ -172,6 +192,10 @@ services:
       interval: 10s
       timeout: 5s
       retries: 5
+      start_period: 5s
+    networks:
+      - bank_app
+
 
 
 
@@ -180,3 +204,7 @@ volumes:
   accounts_db_data:
   cards_db_data:
   loans_db_data:
+
+networks:
+  bank_app:
+    driver: "bridge"
