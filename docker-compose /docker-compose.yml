@@ -4,11 +4,16 @@ version: '3.8'
 # ./hookdeck listen 8072 source --cli-path /monitor
 # docker-compose pull && docker-compose up -d --force-recreate
 
+
+# when moving to a folder, user these commands to clear everything up
+#docker-compose down -v --remove-orphans
+#docker volumes prune
+#docker network prune
+
 services:
 
   accounts_microservice:
     image: omarhammad97/accounts_microservice:latest
-    restart: always
     depends_on:
       accounts_db:
         condition: service_healthy
@@ -19,27 +24,16 @@ services:
     ports:
       - '8000:80'
     environment:
-      SPRING_PROFILES_ACTIVE: 'prod'
       DB_HOST: accounts_db
-      DB_PORT: 5432
       DB_NAME: accounts_db
       DB_USERNAME: accounts_prod
       DB_PASSWORD: accounts_prod
-      CONFIG_SERVER_HOST: configserver
-      CONFIG_SERVER_PORT: "8071"
-      RABBITMQ_HOST: rabbitmq
-      RABBITMQ_PORT: "5672"
-      RABBITMQ_USERNAME: guest
-      RABBITMQ_PASSWORD: guest
-    networks:
-      - bank_app
-
-
-
+    extends:
+      file: common-config.yml
+      service: microservices-common-configs
 
   cards_microservice:
     image: omarhammad97/cards_microservice:latest
-    restart: always
     depends_on:
       cards_db:
         condition: service_healthy
@@ -50,25 +44,16 @@ services:
     ports:
       - '8001:80'
     environment:
-      SPRING_PROFILES_ACTIVE: 'prod'
       DB_HOST: cards_db
-      DB_PORT: 5432
       DB_NAME: cards_db
       DB_USERNAME: cards_prod
       DB_PASSWORD: cards_prod
-      CONFIG_SERVER_HOST: configserver
-      CONFIG_SERVER_PORT: "8071"
-      RABBITMQ_HOST: rabbitmq
-      RABBITMQ_PORT: "5672"
-      RABBITMQ_USERNAME: guest
-      RABBITMQ_PASSWORD: guest
-    networks:
-      - bank_app
-
+    extends:
+      file: common-config.yml
+      service: microservices-common-configs
 
   loans_microservice:
     image: omarhammad97/loans_microservice:latest
-    restart: always
     depends_on:
       loans_db:
         condition: service_healthy
@@ -81,102 +66,56 @@ services:
     environment:
       SPRING_PROFILES_ACTIVE: 'prod'
       DB_HOST: loans_db
-      DB_PORT: 5432
       DB_NAME: loans_db
       DB_USERNAME: loans_prod
       DB_PASSWORD: loans_prod
-      CONFIG_SERVER_HOST: configserver
-      CONFIG_SERVER_PORT: "8071"
-      RABBITMQ_HOST: rabbitmq
-      RABBITMQ_PORT: "5672"
-      RABBITMQ_USERNAME: guest
-      RABBITMQ_PASSWORD: guest
-    networks:
-      - bank_app
+    extends:
+      file: common-config.yml
+      service: microservices-common-configs
 
   accounts_db:
-    image: postgres:15
-    restart: always
     environment:
       POSTGRES_USER: accounts_prod
       POSTGRES_PASSWORD: accounts_prod
       POSTGRES_DB: accounts_db
     volumes:
       - accounts_db_data:/var/lib/postgresql/data
-    healthcheck:
-      test: [ "CMD-SHELL", "pg_isready -U accounts_prod -d accounts_db" ]
-      interval: 10s
-      retries: 5
-      start_period: 5s
-    networks:
-      - bank_app
-
+    extends:
+      file: common-config.yml
+      service: microservices-db-config
 
   cards_db:
-    image: postgres:15
-    restart: always
     environment:
       POSTGRES_USER: cards_prod
       POSTGRES_PASSWORD: cards_prod
       POSTGRES_DB: cards_db
     volumes:
       - cards_db_data:/var/lib/postgresql/data
-    healthcheck:
-      test: [ "CMD-SHELL", "pg_isready -U cards_prod -d cards_db" ]
-      interval: 10s
-      retries: 5
-      start_period: 5s
-    networks:
-      - bank_app
-
+    extends:
+      file: common-config.yml
+      service: microservices-db-config
 
   loans_db:
-    image: postgres:15
-    restart: always
     environment:
       POSTGRES_USER: loans_prod
       POSTGRES_PASSWORD: loans_prod
       POSTGRES_DB: loans_db
     volumes:
       - loans_db_data:/var/lib/postgresql/data
-    healthcheck:
-      test: [ "CMD-SHELL", "pg_isready -U loans_prod -d loans_db" ]
-      interval: 10s
-      retries: 5
-      start_period: 5s
-    networks:
-      - bank_app
-
+    extends:
+      file: common-config.yml
+      service: microservices-db-config
 
   configserver:
     image: omarhammad97/configserver:latest
-    restart: always
     ports:
       - '8072:8071'
     depends_on:
       rabbitmq:
         condition: service_healthy
-    environment:
-      CONFIG_REPO: "git@github.com:omarhammad/bank_app_configs.git"
-      BASE_DIR: "/tmp/config-repos"
-      IS_CLONEABLE: "true"
-      ENCRYPT_KEY: "23fDssfewewSDS3sfefdsda"
-      RABBITMQ_HOST: rabbitmq
-      RABBITMQ_PORT: "5672"
-      RABBITMQ_USERNAME: guest
-      RABBITMQ_PASSWORD: guest
-    volumes:
-      - ~/.ssh:/root/.ssh:ro
-    healthcheck:
-      test: "curl --fail --silent localhost:8071/actuator/health/readiness | grep UP || exit 1"
-      interval: 10s
-      timeout: 5s
-      retries: 10
-      start_period: 10s
-    networks:
-      - bank_app
-
-
+    extends:
+      file: common-config.yml
+      service: microservices-configserver-config
 
   rabbitmq:
     image: rabbitmq:3-management
@@ -184,21 +123,9 @@ services:
     ports:
       - "5672:5672"
       - "15672:15672"
-    environment:
-      RABBITMQ_DEFAULT_USER: guest
-      RABBITMQ_DEFAULT_PASS: guest
-    healthcheck:
-      test: [ "CMD", "rabbitmq-diagnostics", "ping" ]
-      interval: 10s
-      timeout: 5s
-      retries: 5
-      start_period: 5s
-    networks:
-      - bank_app
-
-
-
-
+    extends:
+      file: common-config.yml
+      service: rabbitmq-config
 
 volumes:
   accounts_db_data:
