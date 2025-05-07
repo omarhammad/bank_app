@@ -5,7 +5,7 @@ version: '3.8'
 # docker-compose pull && docker-compose up -d --force-recreate
 
 
-# when moving to a folder, user these commands to clear everything up
+# when moving to a folder, use these commands to clear everything up
 #docker-compose down -v --remove-orphans
 #docker volumes prune
 #docker network prune

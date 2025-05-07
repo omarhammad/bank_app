@@ -34,7 +34,7 @@ dependencies {
 	implementation("org.springframework.security:spring-security-crypto:6.2.1")
 	implementation("org.modelmapper:modelmapper:3.1.0")
 	implementation("org.springframework.cloud:spring-cloud-starter-config")
-	implementation("org.springframework.cloud:spring-cloud-starter-bus-amqp")
+//	implementation("org.springframework.cloud:spring-cloud-starter-bus-amqp")
 
 	compileOnly("org.projectlombok:lombok")
 	developmentOnly("org.springframework.boot:spring-boot-devtools")

@@ -6,8 +6,6 @@ services:
     networks:
       - bank_app
 
-
-
   microservices-common-configs:
     extends:
       service: network-deploy-service
