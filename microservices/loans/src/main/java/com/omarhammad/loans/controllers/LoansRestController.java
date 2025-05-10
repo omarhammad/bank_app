@@ -52,7 +52,7 @@ public class LoansRestController {
             @ApiResponse(responseCode = "400", description = "HTTP Status BAD REQUEST", content = @Content(schema = @Schema(implementation = ErrorResponseDTO.class))),
             @ApiResponse(responseCode = "500", description = "HTTP Status INTERNAL SERVER ERROR", content = @Content(schema = @Schema(implementation = ErrorResponseDTO.class)))
     })
-    @PostMapping("/")
+    @PostMapping("")
     public ResponseEntity<ResponseDTO> createLoan(@RequestBody @Valid LoanDTO loanDTO) {
 
         loansService.createLoan(loanDTO);

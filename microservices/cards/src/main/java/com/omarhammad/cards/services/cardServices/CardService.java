@@ -25,15 +25,10 @@ public class CardService implements ICardService {
     private PasswordEncoder passwordEncoder;
 
     @Override
-    public CardDTO getCard(String cardNumber, String pinCode) {
+    public CardDTO getCard(String phoneNUmber) {
 
-        Card card = cardsRepository.findCardByCardNumber(cardNumber)
-                .orElseThrow(() -> new EntityNotFoundException("Card with this card number %s not found".formatted(cardNumber)));
-
-
-        if (!verifyPinCode(card.getPinCode(), pinCode))
-            throw new InvalidPinCodeException("Invalid Pin Code! try again");
-
+        Card card = cardsRepository.findCardByMobileNumber(phoneNUmber)
+                .orElseThrow(() -> new EntityNotFoundException("Card with this phone number %s not found".formatted(phoneNUmber)));
 
         return modelMapper.map(card, CardDTO.class);
     }

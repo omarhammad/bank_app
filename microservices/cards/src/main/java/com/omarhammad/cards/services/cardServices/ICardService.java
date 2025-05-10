@@ -5,7 +5,7 @@ import jakarta.validation.Valid;
 
 public interface ICardService {
 
-    CardDTO getCard(String cardNumber,String pinCode);
+    CardDTO getCard(String phoneNUmber);
 
     void createCard(CreateCardDTO createCardDTO);
 

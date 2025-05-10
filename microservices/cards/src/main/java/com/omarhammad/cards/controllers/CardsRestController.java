@@ -2,6 +2,7 @@ package com.omarhammad.cards.controllers;
 
 import com.omarhammad.cards.controllers.dto.*;
 import com.omarhammad.cards.services.cardServices.ICardService;
+import com.omarhammad.cards.utils.phoneNumberValidator.ValidPhoneNumber;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -50,15 +51,13 @@ public class CardsRestController {
     @ApiResponses({
             @ApiResponse(responseCode = "200", description = "HTTP Status OK", content = @Content(schema = @Schema(implementation = CardDTO.class))),
             @ApiResponse(responseCode = "400", description = "HTTP Status BAD_REQUEST", content = @Content(schema = @Schema(implementation = ErrorResponseDTO.class))),
-            @ApiResponse(responseCode = "401", description = "HTTP Status UNAUTHORIZED", content = @Content(schema = @Schema(implementation = ErrorResponseDTO.class))),
             @ApiResponse(responseCode = "404", description = "HTTP Status NOT_FOUND", content = @Content(schema = @Schema(implementation = ErrorResponseDTO.class))),
             @ApiResponse(responseCode = "500", description = "HTTP Status INTERNAL_SERVER_ERROR", content = @Content(schema = @Schema(implementation = ErrorResponseDTO.class)))
     })
     @GetMapping("")
-    public ResponseEntity<CardDTO> getCardDetails(@RequestParam @CreditCardNumber(ignoreNonDigitCharacters = true, message = "Invalid card number") String cardNumber,
-                                                  @RequestParam @Size(min = 4, max = 4, message = "Pin code should be 4 digits") String pinCode) {
+    public ResponseEntity<CardDTO> getCardDetails(@RequestParam @ValidPhoneNumber @Schema(example = "+32465123456") String phoneNumber) {
 
-        CardDTO CardDTO = cardService.getCard(cardNumber, pinCode);
+        CardDTO CardDTO = cardService.getCard(phoneNumber);
         return ResponseEntity.ok(CardDTO);
     }
 
@@ -70,6 +69,9 @@ public class CardsRestController {
             @ApiResponse(responseCode = "500", description = "HTTP Status INTERNAL_SERVER_ERROR", content = @Content(schema = @Schema(implementation = ErrorResponseDTO.class))),
 
     })
+
+
+
     @PostMapping("")
     public ResponseEntity<ResponseDTO> createCard(@RequestBody @Valid CreateCardDTO createCardDTO) {
 

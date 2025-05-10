@@ -32,6 +32,7 @@ dependencies {
 	implementation ("com.googlecode.libphonenumber:libphonenumber:8.12.14")
 	implementation("org.springdoc:springdoc-openapi-starter-webmvc-ui:2.8.3")
 	implementation("org.springframework.cloud:spring-cloud-starter-config")
+	implementation("org.springframework.cloud:spring-cloud-starter-netflix-eureka-client")
 //	implementation("org.springframework.cloud:spring-cloud-starter-bus-amqp")
 
 

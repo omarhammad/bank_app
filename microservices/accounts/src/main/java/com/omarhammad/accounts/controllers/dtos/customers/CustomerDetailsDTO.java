@@ -1,15 +1,18 @@
 package com.omarhammad.accounts.controllers.dtos.customers;
 
 import com.omarhammad.accounts.controllers.dtos.accounts.AccountsDTO;
+import com.omarhammad.accounts.controllers.dtos.cards.CardDTO;
+import com.omarhammad.accounts.controllers.dtos.loans.LoanDTO;
 import com.omarhammad.accounts.utils.phoneNumberValidator.ValidPhoneNumber;
 import io.swagger.v3.oas.annotations.media.Schema;
-import jakarta.validation.constraints.*;
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.Size;
 import lombok.Data;
 
 @Data
-@Schema(name = "Customer", description = "Schema to hold Customer and Account information")
-public class CustomerDTO {
-
+@Schema(name = "Customer", description = "Schema to hold Customer, Account, Cards and Loans information")
+public class CustomerDetailsDTO {
     @Schema(description = "Name of the customer", example = "Omar Hammad")
     @NotEmpty(message = "Customer name must be provided!")
     @Size(min = 5, max = 30, message = "The length of the customer name should be between 5 and 30")
@@ -29,4 +32,15 @@ public class CustomerDTO {
             description = "Account details of the Customer"
     )
     private AccountsDTO account;
+
+    @Schema(
+            description = "Card details of the Customer"
+    )
+    private CardDTO cardDTO;
+
+    @Schema(
+            description = "Loans details of the Customer"
+    )
+    private LoanDTO loanDTO;
 }
+
