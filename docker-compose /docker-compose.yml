@@ -75,9 +75,9 @@ services:
       file: common-config.yml
       service: microservices-common-configs
 
-  loans_microservice:
+  loans_microservice_1:
     image: omarhammad97/loans_microservice
-    container_name: loans_microservice
+    container_name: loans_microservice_1
     depends_on:
       loans_db:
         condition: service_healthy
@@ -87,6 +87,27 @@ services:
         condition: service_healthy
     ports:
       - '8002:80'
+    environment:
+      DB_HOST: loans_db
+      DB_NAME: loans_db
+      DB_USERNAME: loans_prod
+      DB_PASSWORD: loans_prod
+    extends:
+      file: common-config.yml
+      service: microservices-common-configs
+
+  loans_microservice_2:
+    image: omarhammad97/loans_microservice
+    container_name: loans_microservice_2
+    depends_on:
+      loans_db:
+        condition: service_healthy
+      configserver:
+        condition: service_healthy
+      eurekaserver:
+        condition: service_healthy
+    ports:
+      - '8003:80'
     environment:
       DB_HOST: loans_db
       DB_NAME: loans_db
