@@ -7,19 +7,41 @@ version: '3.8'
 
 # when moving to a folder, use these commands to clear everything up
 #docker-compose down -v --remove-orphans
-#docker volumes prune
-#docker network prune
+#docker volume prune -f
+#docker network prune -f
 
 services:
 
+  configserver:
+    image: omarhammad97/configserver:latest
+    container_name: configserver
+    ports:
+      - '8072:8071'
+    extends:
+      file: common-config.yml
+      service: microservices-configserver-config
+
+  eurekaserver:
+    image: "omarhammad97/eurekaserver"
+    container_name: eurekaserver
+    ports:
+      - "8073:8070"
+    depends_on:
+      configserver:
+        condition: service_healthy
+    extends:
+      file: common-config.yml
+      service: microservices-eurekaserver-config
+
   accounts_microservice:
-    image: omarhammad97/accounts_microservice:latest
+    image: omarhammad97/accounts_microservice
+    container_name: accounts_microservice
     depends_on:
       accounts_db:
         condition: service_healthy
-      rabbitmq:
-        condition: service_healthy
       configserver:
+        condition: service_healthy
+      eurekaserver:
         condition: service_healthy
     ports:
       - '8000:80'
@@ -33,13 +55,14 @@ services:
       service: microservices-common-configs
 
   cards_microservice:
-    image: omarhammad97/cards_microservice:latest
+    image: omarhammad97/cards_microservice
+    container_name: cards_microservice
     depends_on:
       cards_db:
         condition: service_healthy
-      rabbitmq:
-        condition: service_healthy
       configserver:
+        condition: service_healthy
+      eurekaserver:
         condition: service_healthy
     ports:
       - '8001:80'
@@ -53,18 +76,18 @@ services:
       service: microservices-common-configs
 
   loans_microservice:
-    image: omarhammad97/loans_microservice:latest
+    image: omarhammad97/loans_microservice
+    container_name: loans_microservice
     depends_on:
       loans_db:
         condition: service_healthy
-      rabbitmq:
-        condition: service_healthy
       configserver:
+        condition: service_healthy
+      eurekaserver:
         condition: service_healthy
     ports:
       - '8002:80'
     environment:
-      SPRING_PROFILES_ACTIVE: 'prod'
       DB_HOST: loans_db
       DB_NAME: loans_db
       DB_USERNAME: loans_prod
@@ -74,6 +97,7 @@ services:
       service: microservices-common-configs
 
   accounts_db:
+    container_name: accounts_db
     environment:
       POSTGRES_USER: accounts_prod
       POSTGRES_PASSWORD: accounts_prod
@@ -85,6 +109,7 @@ services:
       service: microservices-db-config
 
   cards_db:
+    container_name: cards_db
     environment:
       POSTGRES_USER: cards_prod
       POSTGRES_PASSWORD: cards_prod
@@ -96,6 +121,7 @@ services:
       service: microservices-db-config
 
   loans_db:
+    container_name: loans_db
     environment:
       POSTGRES_USER: loans_prod
       POSTGRES_PASSWORD: loans_prod
@@ -105,27 +131,6 @@ services:
     extends:
       file: common-config.yml
       service: microservices-db-config
-
-  configserver:
-    image: omarhammad97/configserver:latest
-    ports:
-      - '8072:8071'
-    depends_on:
-      rabbitmq:
-        condition: service_healthy
-    extends:
-      file: common-config.yml
-      service: microservices-configserver-config
-
-  rabbitmq:
-    image: rabbitmq:3-management
-    container_name: rabbitmq
-    ports:
-      - "5672:5672"
-      - "15672:15672"
-    extends:
-      file: common-config.yml
-      service: rabbitmq-config
 
 volumes:
   accounts_db_data:

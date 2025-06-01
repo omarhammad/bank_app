@@ -14,11 +14,9 @@ services:
       SPRING_PROFILES_ACTIVE: 'prod'
       DB_PORT: 5432
       CONFIG_SERVER_HOST: configserver
-      CONFIG_SERVER_PORT: "8071"
-      RABBITMQ_HOST: rabbitmq
-      RABBITMQ_PORT: "5672"
-      RABBITMQ_USERNAME: guest
-      RABBITMQ_PASSWORD: guest
+      CONFIG_SERVER_PORT: 8071
+      EUREKA_SERVER_HOST: eurekaserver
+      EUREKA_SERVER_PORT: 8070
 
   microservices-db-config:
     image: postgres:15
@@ -38,10 +36,6 @@ services:
       BASE_DIR: "/tmp/config-repos"
       IS_CLONEABLE: "true"
       ENCRYPT_KEY: "23fDssfewewSDS3sfefdsda"
-      RABBITMQ_HOST: rabbitmq
-      RABBITMQ_PORT: "5672"
-      RABBITMQ_USERNAME: guest
-      RABBITMQ_PASSWORD: guest
     volumes:
       - ~/.ssh:/root/.ssh:ro
     healthcheck:
@@ -53,20 +47,16 @@ services:
     extends:
       service: network-deploy-service
 
-
-  rabbitmq-config:
+  microservices-eurekaserver-config:
     extends:
       service: network-deploy-service
     environment:
-      RABBITMQ_DEFAULT_USER: guest
-      RABBITMQ_DEFAULT_PASS: guest
+      CONFIG_SERVER_HOST: configserver
+      CONFIG_SERVER_PORT: "8071"
     healthcheck:
-      test: [ "CMD", "rabbitmq-diagnostics", "ping" ]
+      test: "curl --fail --silent localhost:8070/actuator/health/readiness | grep UP || exit 1"
       interval: 10s
       timeout: 5s
-      retries: 5
-      start_period: 5s
-
-
-
+      retries: 10
+      start_period: 10s
 
