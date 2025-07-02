@@ -13,13 +13,14 @@ version: '3.8'
 services:
 
   configserver:
-    image: omarhammad97/configserver:latest
+    image: omarhammad97/configserver
     container_name: configserver
     ports:
       - '8072:8071'
     extends:
       file: common-config.yml
       service: microservices-configserver-config
+
 
   eurekaserver:
     image: "omarhammad97/eurekaserver"

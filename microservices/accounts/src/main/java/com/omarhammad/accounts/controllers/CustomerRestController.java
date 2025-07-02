@@ -38,7 +38,7 @@ public class CustomerRestController {
                     content = @Content(schema = @Schema(implementation = ErrorResponseDTO.class)))
     })
     @GetMapping("/{mobileNumber}")
-    public ResponseEntity<CustomerDetailsDTO> fetchCustomerDetails(@RequestParam
+    public ResponseEntity<CustomerDetailsDTO> fetchCustomerDetails(@PathVariable
                                                                    @ValidPhoneNumber
                                                                    String mobileNumber) {
         CustomerDetailsDTO customerDetailsDTO = customerService.getCustomerDetails(mobileNumber);
